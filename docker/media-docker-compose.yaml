@@ -1,0 +1,77 @@
+version: "2.4"
+services:
+  jackett:
+    container_name: jackett
+    image: linuxserver/jackett:latest
+    network_mode: bridge
+    mem_limit: 100m
+    mem_reservation: 50m
+    ports:
+      - "9095:9117"
+    #    labels:
+    #      - traefik.enable=true
+    #      - traefik.http.services.jackett.loadbalancer.server.port=9117
+    #      - traefik.http.routers.jackett.rule=PathPrefix(`/j`)
+    volumes:
+      - ${DOCKER_DIR:-/}/jackett/config:/config
+      - ${DOCKER_DIR:-/}/jackett/downloads:/downloads
+    restart: unless-stopped
+
+  sonarr:
+    container_name: sonarr
+    image: linuxserver/sonarr:latest
+    network_mode: bridge
+    mem_limit: 100m
+    mem_reservation: 50m
+    ports:
+      - "9094:8989"
+    volumes:
+      - ${DOCKER_DIR:-/}/sonarr/config:/config
+      - ${DOCKER_DIR:-/}/downloads:/downloads
+      - ${DOCKER_DIR:-/}/downloads/tv:/tv
+    depends_on:
+      - jackett
+    #    labels:
+    #      - traefik.enable=true
+    #      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+    #      - traefik.http.routers.sonarr.rule=PathPrefix(`/s`)
+    restart: unless-stopped
+
+  radarr:
+    container_name: radarr
+    image: linuxserver/radarr:latest
+    network_mode: bridge
+    mem_limit: 100m
+    mem_reservation: 50m
+    ports:
+      - "9096:7878"
+    volumes:
+      - ${DOCKER_DIR:-/}/radarr/config:/config
+      - ${DOCKER_DIR:-/}/downloads:/downloads
+      - ${DOCKER_DIR:-/}/downloads/movies:/movies
+    depends_on:
+      - jackett
+    #    labels:
+    #      - traefik.enable=true
+    #      - traefik.http.services.radarr.loadbalancer.server.port=7878
+    #      - traefik.http.routers.radarr.rule=PathPrefix(`/r`)
+    restart: unless-stopped
+
+  overseerr:
+    container_name: overseerr
+    image: sctx/overseerr:latest
+    network_mode: bridge
+    mem_limit: 100m
+    mem_reservation: 50m
+    ports:
+      - "9098:5055"
+    volumes:
+      - ${DOCKER_DIR:-/}/overseerr/config:/app/config
+    depends_on:
+      - sonarr
+      - radarr
+    #    labels:
+    #      - traefik.enable=true
+    #      - traefik.http.services.overseerr.loadbalancer.server.port=5055
+    #      - traefik.http.routers.overseerr.rule=PathPrefix(`/o`)
+    restart: unless-stopped
