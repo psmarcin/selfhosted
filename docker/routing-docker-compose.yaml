@@ -4,6 +4,8 @@ services:
     image: traefik:v2.4         # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
     network_mode: "host"
+    mem_limit: 48m
+    mem_reservation: 24m
     command:
       #      - "--log.level=DEBUG"
       - --api.insecure=true
