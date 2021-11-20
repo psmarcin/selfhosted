@@ -8,7 +8,6 @@ services:
     restart: unless-stopped
     mem_limit: 50m
     mem_reservation: 25m
-    cpus: 0.1
 
   postgres:
     container_name: postgres
@@ -24,7 +23,6 @@ services:
       POSTGRES_PASSWORD: pg
     mem_limit: 100m
     mem_reservation: 50m
-    cpus: 0.2
 
 volumes:
   pgdata:
