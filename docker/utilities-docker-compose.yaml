@@ -24,6 +24,7 @@ services:
 
 volumes:
   pgdata:
+    external: true
   
 # networks:
 #   public:
