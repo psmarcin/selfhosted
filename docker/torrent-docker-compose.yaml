@@ -1,0 +1,36 @@
+version: "2.4"
+services:
+  vpn:
+    image: ghcr.io/bubuntux/nordvpn:v3.12.1-1-1
+    cap_add:
+      - NET_ADMIN               # Required
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.eth0.rp_filter=2
+    environment: # Review https://github.com/bubuntux/nordvpn#environment-variables
+      - 'USER=${VPN_USER}'     # Required
+      - 'PASS=${VPN_PASS}'         # Required
+      - TECHNOLOGY=NordLynx
+      - CONNECTION=p2p
+    restart: unless-stopped
+    mem_limit: 64m
+    mem_reservation: 25m
+
+#  torrent:
+#    image: ghcr.io/linuxserver/transmission
+#    network_mode: service:vpn
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.services.torrent.loadbalancer.server.port=9091
+#      - traefik.http.routers.torrent.rule=PathPrefix(`/`)
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=Europe/London
+#      # - TRANSMISSION_WEB_HOME=/t/
+#    volumes:
+#      - /volume1/docker/transmission:/config
+#      - /volume1/docker/downloads:/downloads
+#      - /volume1/docker/transmission/watch:/watch
+#    depends_on:
+#      - vpn
