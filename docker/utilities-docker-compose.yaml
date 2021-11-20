@@ -3,15 +3,15 @@ services:
   redis:
     container_name: redis
     image: redis:6.0
-    networks: 
-      public: {}
+    # networks: 
+    #   public: {}
     restart: unless-stopped
 
   postgres:
     container_name: postgres
     image: postgres:14
-    networks: 
-      public: {}
+    # networks: 
+    #   public: {}
     restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -23,7 +23,7 @@ services:
 volumes:
   pgdata:
   
-networks:
-  public:
-    external:
-      name: public
+# networks:
+#   public:
+#     external:
+#       name: public
