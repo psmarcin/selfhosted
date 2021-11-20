@@ -4,7 +4,7 @@ services:
     container_name: jackett
     image: linuxserver/jackett:latest
     network_mode: bridge
-    mem_limit: 100m
+    mem_limit: 256m
     mem_reservation: 50m
     ports:
       - "9095:9117"
@@ -21,7 +21,7 @@ services:
     container_name: sonarr
     image: linuxserver/sonarr:latest
     network_mode: bridge
-    mem_limit: 100m
+    mem_limit: 256m
     mem_reservation: 50m
     ports:
       - "9094:8989"
@@ -41,7 +41,7 @@ services:
     container_name: radarr
     image: linuxserver/radarr:latest
     network_mode: bridge
-    mem_limit: 100m
+    mem_limit: 256m
     mem_reservation: 50m
     ports:
       - "9096:7878"
@@ -61,7 +61,7 @@ services:
     container_name: overseerr
     image: sctx/overseerr:latest
     network_mode: bridge
-    mem_limit: 128m
+    mem_limit: 256m
     mem_reservation: 64m
     ports:
       - "9098:5055"
