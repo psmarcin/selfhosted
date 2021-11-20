@@ -61,8 +61,8 @@ services:
     container_name: overseerr
     image: sctx/overseerr:latest
     network_mode: bridge
-    mem_limit: 100m
-    mem_reservation: 50m
+    mem_limit: 128m
+    mem_reservation: 64m
     ports:
       - "9098:5055"
     volumes:
