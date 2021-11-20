@@ -14,7 +14,7 @@ services:
     network_mode: bridge
     restart: unless-stopped
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - utils_pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
@@ -23,7 +23,7 @@ services:
     mem_reservation: 50m
 
 volumes:
-  pgdata:
+  utils_pgdata:
     external: true
   
 # networks:
