@@ -1,0 +1,29 @@
+version: "3.4"
+services:
+  redis:
+    container_name: redis
+    image: redis:6.0
+    networks: 
+      public: {}
+    restart: unless-stopped
+
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    networks: 
+      public: {}
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: pg
+      POSTGRES_USER: pg
+      POSTGRES_PASSWORD: pg
+
+volumes:
+  pgdata:
+  
+networks:
+  public:
+    external:
+      name: public
