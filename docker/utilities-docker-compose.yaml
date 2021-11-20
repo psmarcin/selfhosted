@@ -6,6 +6,7 @@ services:
     # networks: 
     #   public: {}
     restart: unless-stopped
+    mem_limit: 50m
 
   postgres:
     container_name: postgres
@@ -19,6 +20,7 @@ services:
       POSTGRES_DB: pg
       POSTGRES_USER: pg
       POSTGRES_PASSWORD: pg
+    mem_limit: 100m
 
 volumes:
   pgdata:
