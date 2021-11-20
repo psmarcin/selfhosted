@@ -16,9 +16,9 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: pg
-      POSTGRES_USER: pg
-      POSTGRES_PASSWORD: pg
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     mem_limit: 100m
     mem_reservation: 50m
 
