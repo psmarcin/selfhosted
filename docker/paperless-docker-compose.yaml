@@ -1,0 +1,30 @@
+version: "2.4"
+services:
+  paperless:
+    image: jonaswinkler/paperless-ng:latest
+    container_name: paperless
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - "9099:8000"
+    volumes:
+      - pl_data:/usr/src/paperless/data
+      - pl_media:/usr/src/paperless/media
+      - ${ROOT_DIR:-/}export:/usr/src/paperless/export
+      - ${ROOT_DIR:-/}/consume:/usr/src/paperless/consume
+    environment:
+      PAPERLESS_REDIS: redis://172.17.0.8:6379
+      PAPERLESS_DBHOST: 172.17.0.9
+      PAPERLESS_DBNAME: postgres
+      PAPERLESS_DBUSER: postgres
+      PAPERLESS_DBPASS: postgres
+      PAPERLESS_DBSSLMODE: disable
+      PAPERLESS_OCR_LANGUAGES: pol
+      PAPERLESS_TIME_ZONE: Europe/Warsaw
+      PAPERLESS_SECRET_KEY: "Tse@n&L8eCHuZAsVmWH"
+      PAPERLESS_ADMIN_USER: ${A_USER:-ps}
+      PAPERLESS_ADMIN_PASSWORD: ${A_PASS:-ps123}
+      PAPERLESS_CONSUMER_RECURSIVE: "true"
+volumes:
+  pl_data:
+  pl_media:
