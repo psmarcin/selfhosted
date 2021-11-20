@@ -34,5 +34,5 @@ services:
       - /volume1/docker/transmission/watch:/watch
     depends_on:
       - vpn
-    mem_limit: 128m
-    mem_reservation: 50m
+    # mem_limit: 128m
+    # mem_reservation: 50m
