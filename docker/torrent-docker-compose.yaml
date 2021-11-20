@@ -13,24 +13,24 @@ services:
       - TECHNOLOGY=NordLynx
       - CONNECTION=p2p
     restart: unless-stopped
-    mem_limit: 64m
-    mem_reservation: 25m
+    mem_limit: 128m
+    mem_reservation: 50m
 
-#  torrent:
-#    image: ghcr.io/linuxserver/transmission
-#    network_mode: service:vpn
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.services.torrent.loadbalancer.server.port=9091
-#      - traefik.http.routers.torrent.rule=PathPrefix(`/`)
-#    environment:
-#      - PUID=1000
-#      - PGID=1000
-#      - TZ=Europe/London
-#      # - TRANSMISSION_WEB_HOME=/t/
-#    volumes:
-#      - /volume1/docker/transmission:/config
-#      - /volume1/docker/downloads:/downloads
-#      - /volume1/docker/transmission/watch:/watch
-#    depends_on:
-#      - vpn
+ torrent:
+   image: ghcr.io/linuxserver/transmission
+   network_mode: service:vpn
+   labels:
+     - traefik.enable=true
+     - traefik.http.services.torrent.loadbalancer.server.port=9091
+     - traefik.http.routers.torrent.rule=PathPrefix(`/`)
+   environment:
+     - PUID=1000
+     - PGID=1000
+     - TZ=Europe/London
+     # - TRANSMISSION_WEB_HOME=/t/
+   volumes:
+     - /volume1/docker/transmission:/config
+     - /volume1/docker/downloads:/downloads
+     - /volume1/docker/transmission/watch:/watch
+   depends_on:
+     - vpn
