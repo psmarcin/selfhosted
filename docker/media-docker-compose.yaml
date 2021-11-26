@@ -77,7 +77,6 @@ services:
     restart: unless-stopped
 
   bazarr:
-    container_name: bazarr
     image: lscr.io/linuxserver/bazarr
     container_name: bazarr
     environment:
