@@ -75,3 +75,19 @@ services:
     #      - traefik.http.services.overseerr.loadbalancer.server.port=5055
     #      - traefik.http.routers.overseerr.rule=PathPrefix(`/o`)
     restart: unless-stopped
+
+  bazarr:
+    container_name: overseerr
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ${DOCKER_DIR:-/}/bazarr/config:/config
+      - ${DOCKER_DIR:-/}/downloads/movies:/movies 
+      - ${DOCKER_DIR:-/}/downloads/tv:/tv 
+    ports:
+      - "9001:6767"
+    restart: unless-stopped
