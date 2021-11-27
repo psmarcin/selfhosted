@@ -5,15 +5,19 @@ Hi, this repository represents selfhosted applications. It helps track of any ch
 Setup is based on Docker images, so it's natural that Docker is required. Initial setup works on ~2GB memory (with Synology's Disk Station Manager and other apps running). Except that you need some storege. 
 
 ### How to run it
+Shared dependencies like networks need to be created before most of services: 
+```shell
+docker network create utilites
+```
 ##### Media: 
 ```shell
+docker network create media
 docker-compose --file docker/media-docker-compose.yaml up --detach
 ```
 ##### Paperless: 
 ```shell
 docker volume create --name=paperless_pl_media
 docker volume create --name=paperless_pl_data
-docker network create utilites
 docker-compose --file docker/paperless-docker-compose.yaml up --detach
 ```
 ##### Routing: 
@@ -27,7 +31,6 @@ docker-compose --file docker/torrent-docker-compose.yaml up --detach
 ##### Utilities: 
 ```shell
 docker volume create --name=utils_pgdata
-docker network create utilites
 ddocker-compose --file docker/utilities-docker-compose.yaml up --detach
 ```
 

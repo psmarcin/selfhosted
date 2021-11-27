@@ -13,7 +13,7 @@ services:
       - TECHNOLOGY=NordLynx
       - CONNECTION=p2p
     restart: unless-stopped
-    mem_limit: 128m
+    mem_limit: 256m
     mem_reservation: 50m
 
   torrent:
