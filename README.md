@@ -7,23 +7,28 @@ Setup is based on Docker images, so it's natural that Docker is required. Initia
 ### How to run it
 ##### Media: 
 ```shell
-docker-compose up --detach --file ./docker/media-docker-compose.yaml
+docker-compose --file docker/media-docker-compose.yaml up --detach
 ```
 ##### Paperless: 
 ```shell
-docker-compose up --detach --file ./docker/paperless-docker-compose.yaml
+docker volume create --name=paperless_pl_media
+docker volume create --name=paperless_pl_data
+docker network create utilites
+docker-compose --file docker/paperless-docker-compose.yaml up --detach
 ```
 ##### Routing: 
 ```shell
-docker-compose up --detach --file ./docker/routing-docker-compose.yaml
+docker-compose --file docker/routing-docker-compose.yaml up --detach
 ```
 ##### Torrent: 
 ```shell
-docker-compose up --detach --file ./docker/torrent-docker-compose.yaml
+docker-compose --file docker/torrent-docker-compose.yaml up --detach
 ```
 ##### Utilities: 
 ```shell
-docker-compose up --detach --file ./docker/utilities-docker-compose.yaml
+docker volume create --name=utils_pgdata
+docker network create utilites
+ddocker-compose --file docker/utilities-docker-compose.yaml up --detach
 ```
 
 ### Services 
