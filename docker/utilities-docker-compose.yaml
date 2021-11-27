@@ -3,7 +3,8 @@ services:
   redis:
     container_name: redis
     image: redis:6.0
-    network_mode: bridge
+    networks:
+      - utilites
     restart: unless-stopped
     mem_limit: 50m
     mem_reservation: 25m
@@ -11,7 +12,8 @@ services:
   postgres:
     container_name: postgres
     image: postgres:14
-    network_mode: bridge
+    networks:
+      - utilites
     restart: unless-stopped
     volumes:
       - utils_pgdata:/var/lib/postgresql/data
@@ -24,9 +26,10 @@ services:
 
 volumes:
   utils_pgdata:
-    external: true
-  
-# networks:
-#   public:
-#     external:
-#       name: public
+    external:
+      name: utils_pgdata
+
+networks:
+  utilites:
+    external:
+      name: utilites

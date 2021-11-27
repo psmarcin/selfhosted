@@ -1,10 +1,11 @@
 version: "2.4"
 services:
   paperless:
-    image: jonaswinkler/paperless-ng:latest
+    image: jonaswinkler/paperless-ng:1.4.0
+    networks:
+      - utilites
     container_name: paperless
     restart: unless-stopped
-    network_mode: bridge
     # mem_limit: 1g
     # mem_reservation: 512m
     ports:
@@ -12,11 +13,11 @@ services:
     volumes:
       - pl_data:/usr/src/paperless/data
       - pl_media:/usr/src/paperless/media
-      - ${ROOT_DIR:-/}export:/usr/src/paperless/export
-      - ${ROOT_DIR:-/}/consume:/usr/src/paperless/consume
+      - ${ROOT_DIR:-./}export:/usr/src/paperless/export
+      - ${ROOT_DIR:-./}/consume:/usr/src/paperless/consume
     environment:
-      PAPERLESS_REDIS: redis://172.17.0.9:6379
-      PAPERLESS_DBHOST: 172.17.0.4
+      PAPERLESS_REDIS: redis://redis:6379
+      PAPERLESS_DBHOST: postgres
       PAPERLESS_DBNAME: postgres
       PAPERLESS_DBUSER: postgres
       PAPERLESS_DBPASS: postgres
@@ -27,6 +28,16 @@ services:
       PAPERLESS_ADMIN_USER: ${A_USER:-ps}
       PAPERLESS_ADMIN_PASSWORD: ${A_PASS:-ps123}
       PAPERLESS_CONSUMER_RECURSIVE: "true"
+
 volumes:
   pl_data:
+    external:
+      name: paperless_pl_data
   pl_media:
+    external:
+      name: paperless_pl_media
+
+networks:
+  utilites:
+    external:
+      name: utilites
