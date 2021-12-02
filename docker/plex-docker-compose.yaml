@@ -7,7 +7,7 @@ services:
     environment:
       - PUID=1027
       - PGID=users
-      - VERSION=latest
+      - VERSION=${PLEX_VERSION:-docker}
       - PLEX_CLAIM=${PLEX_CLAIM:-.}
     ports:
       - "32400:32400"
