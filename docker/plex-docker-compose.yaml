@@ -1,0 +1,19 @@
+version: "2.4"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: bridge
+    environment:
+      - PUID=1234
+      - PGID=5678
+      - VERSION=latest
+    ports:
+      - "32400:32400"
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - /volume1/docker/plex:/config
+      - /volume1/docker/downloads:/volume1/docker/downloads
+      - /volume1/docker/transmission-openvpn/completed:/volume1/docker/transmission-openvpn/completed
+    restart: unless-stopped
