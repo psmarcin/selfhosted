@@ -3,11 +3,12 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    network_mode: bridge
+    network_mode: host
     environment:
       - PUID=1234
       - PGID=5678
       - VERSION=latest
+      - PLEX_CLAIM=${PLEX_CLAIM:-.}
     ports:
       - "32400:32400"
     devices:
