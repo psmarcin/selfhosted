@@ -6,7 +6,7 @@ services:
     network_mode: host
     environment:
       - PUID=1027
-      - PGID=users
+      - PGID=100
       - VERSION=${PLEX_VERSION:-docker}
       - PLEX_CLAIM=${PLEX_CLAIM:-.}
     ports:
