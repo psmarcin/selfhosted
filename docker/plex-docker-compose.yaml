@@ -8,7 +8,7 @@ services:
       - PUID=1027
       - PGID=100
       - VERSION=${PLEX_VERSION:-docker}
-      - PLEX_CLAIM=${PLEX_CLAIM:-.}
+      # - PLEX_CLAIM=${PLEX_CLAIM:-.}
     ports:
       - "32400:32400"
     # devices:
