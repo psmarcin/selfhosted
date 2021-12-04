@@ -40,7 +40,6 @@ services:
       - traefik.http.middlewares.uptime.redirectscheme.scheme=https
       - traefik.http.middlewares.uptime.redirectscheme.permanent=true
       - traefik.http.middlewares.uptime.compress=true
-      - traefik.http.routers.uptime.middlewares=uptime
     ports:
       - "9090:3001"
     volumes:
