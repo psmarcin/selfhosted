@@ -25,6 +25,10 @@ services:
     image: louislam/uptime-kuma:1.10.2
     mem_limit: 128m
     mem_reservation: 64m
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.uptime.loadbalancer.server.port=3001
+      - traefik.http.routers.uptime.rule=Host(`up.onet.blog`)
     ports:
       - "9090:3001"
     volumes:
