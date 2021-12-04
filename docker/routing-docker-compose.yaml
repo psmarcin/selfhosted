@@ -33,7 +33,7 @@ services:
     mem_limit: 128m
     mem_reservation: 64m
     labels:
-      - traefik.enable=true
+      - traefik.enable=false
       - traefik.http.services.uptime.loadbalancer.server.port=3001
       - traefik.http.routers.uptime.rule=Host(`up.onet.blog`)
       - traefik.http.routers.uptime.tls=true
