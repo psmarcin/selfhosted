@@ -72,7 +72,6 @@ services:
       - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
       - traefik.http.middlewares.overseerr.redirectscheme.permanent=true
       - traefik.http.middlewares.overseerr.compress=true
-      - traefik.http.routers.overseerr.middlewares=overseerr
 
   bazarr:
     image: lscr.io/linuxserver/bazarr
