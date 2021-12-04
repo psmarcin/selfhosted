@@ -13,7 +13,11 @@ services:
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:9091
       - --entrypoints.websecure.address=:9443
-
+      - "--certificatesResolvers.le.acme.email=${EMAIL}"
+      - "--certificatesResolvers.le.acme.storage=acme.json"
+      - "--certificatesResolvers.le.acme.tlsChallenge=true"
+      - "--certificatesResolvers.le.acme.httpChallenge=true"
+      - "--certificatesResolvers.le.acme.httpChallenge.entryPoint=web"
     ports:
       - "9091:9091"
       - "9443:9443"
@@ -31,6 +35,10 @@ services:
       - traefik.enable=true
       - traefik.http.services.uptime.loadbalancer.server.port=3001
       - traefik.http.routers.uptime.rule=Host(`up.onet.blog`)
+      - traefik.http.routers.uptime.tls=true
+      - traefik.http.routers.uptime.tls.certresolver=le
+      - traefik.http.middlewares.uptime.compress=true
+      - traefik.http.routers.uptime.middlewares=up@docker
     ports:
       - "9090:3001"
     volumes:
