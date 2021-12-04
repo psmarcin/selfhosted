@@ -1,0 +1,11 @@
+version: "2.4"
+services:
+  wiki:
+    image: zadam/trilium:0.48.0-beta
+    container_name: wiki
+    network_mode: bridge
+    ports:
+      - "9202:8080"
+    volumes:
+      - /volume1/docker/wiki:/home/node/trilium-data
+    restart: unless-stopped
