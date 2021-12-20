@@ -1,5 +1,10 @@
 version: "2.4"
 services:
+  watchtower:
+    image: containrrr/watchtower 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      
   redis:
     container_name: redis
     image: redis:6.0
