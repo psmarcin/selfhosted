@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   vpn:
-    image: ghcr.io/bubuntux/nordvpn:v3.9.5-1
+    image: ghcr.io/bubuntux/nordvpn:v3.12.2
     cap_add:
       - NET_ADMIN               # Required
       - SYS_MODULE
@@ -17,7 +17,7 @@ services:
     mem_reservation: 50m
 
   torrent:
-    image: ghcr.io/linuxserver/transmission
+    image: ghcr.io/linuxserver/transmission:version-3.00-r2 
     network_mode: service:vpn
     labels:
       - traefik.enable=true
