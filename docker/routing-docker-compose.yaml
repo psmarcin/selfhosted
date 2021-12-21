@@ -13,12 +13,12 @@ services:
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:9091
       - --entrypoints.websecure.address=:9443
-      - "--certificatesResolvers.le.acme.email=${EMAIL}"
-      - "--certificatesResolvers.le.acme.storage=acme.json"
-      - "--certificatesResolvers.le.acme.tlsChallenge=true"
-      - "--certificatesResolvers.le.acme.httpChallenge=true"
-      - "--certificatesResolvers.le.acme.httpChallenge.entryPoint=web"
-      - "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+      # - "--certificatesResolvers.le.acme.email=${EMAIL}"
+      # - "--certificatesResolvers.le.acme.storage=acme.json"
+      # - "--certificatesResolvers.le.acme.tlsChallenge=true"
+      # - "--certificatesResolvers.le.acme.httpChallenge=true"
+      # - "--certificatesResolvers.le.acme.httpChallenge.entryPoint=web"
+      # - "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
     ports:
       - "9091:9091"
       - "9443:9443"
