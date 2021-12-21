@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   proxy:
-    image: traefik:v2.4         # Review traefik documentation https://doc.traefik.io/traefik/
+    image: traefik:v2.5.5        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
     network_mode: "host"
     mem_limit: 48m
