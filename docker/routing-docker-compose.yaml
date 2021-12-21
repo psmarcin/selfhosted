@@ -35,12 +35,12 @@ services:
     labels:
       - traefik.enable=false
       - traefik.http.services.uptime.loadbalancer.server.port=3001
-      - traefik.http.routers.uptime.rule=Host(`up.onet.blog`)
-      - traefik.http.routers.uptime.tls=true
-      - traefik.http.routers.uptime.tls.certresolver=le
-      - traefik.http.middlewares.uptime.redirectscheme.scheme=https
-      - traefik.http.middlewares.uptime.redirectscheme.permanent=true
-      - traefik.http.middlewares.uptime.compress=true
+      - traefik.http.routers.uptime.rule=PathPrefix(`/m`)
+      # - traefik.http.routers.uptime.tls=true
+      # - traefik.http.routers.uptime.tls.certresolver=le
+      # - traefik.http.middlewares.uptime.redirectscheme.scheme=https
+      # - traefik.http.middlewares.uptime.redirectscheme.permanent=true
+      # - traefik.http.middlewares.uptime.compress=true
     ports:
       - "9090:3001"
     volumes:
