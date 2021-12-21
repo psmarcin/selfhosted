@@ -66,12 +66,12 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
-      - traefik.http.routers.overseerr.rule=Host(`plex.onet.blog`)
-      - traefik.http.routers.overseerr.tls=true
-      - traefik.http.routers.overseerr.tls.certresolver=le
-      - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
-      - traefik.http.middlewares.overseerr.redirectscheme.permanent=true
-      - traefik.http.middlewares.overseerr.compress=true
+      - traefik.http.routers.overseerr.rule=PathPrefix(`/o`)
+      # - traefik.http.routers.overseerr.tls=true
+      # - traefik.http.routers.overseerr.tls.certresolver=le
+      # - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
+      # - traefik.http.middlewares.overseerr.redirectscheme.permanent=true
+      # - traefik.http.middlewares.overseerr.compress=true
 
   bazarr:
     image: lscr.io/linuxserver/bazarr
