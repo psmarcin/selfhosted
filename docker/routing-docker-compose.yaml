@@ -49,11 +49,11 @@ services:
   homer:
     image: b4bz/homer:latest
     container_name: homer
-    # ports:
-    #   - "8080:9000"
+    ports:
+      - "9200:8080"
     restart: unless-stopped
     labels:
-     - traefik.enable=true
+     - traefik.enable=false
      - traefik.http.services.homer.loadbalancer.server.port=8080
      - traefik.http.routers.homer.rule=PathPrefix(`/start`)
     environment:
