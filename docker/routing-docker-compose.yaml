@@ -53,7 +53,7 @@ services:
     #   - "8080:9000"
     restart: unless-stopped
     labels:
-     - traefik.enable=false
+     - traefik.enable=true
      - traefik.http.services.homer.loadbalancer.server.port=8080
      - traefik.http.routers.homer.rule=PathPrefix(`/start`)
     environment:
