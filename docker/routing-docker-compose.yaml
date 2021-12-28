@@ -45,3 +45,19 @@ services:
       - "9090:3001"
     volumes:
       - /volume1/docker/uptime/data:/app/data
+  
+  homer:
+    image: b4bz/homer:latest
+    container_name: homer
+    # ports:
+    #   - "8080:9000"
+    restart: unless-stopped
+    labels:
+     - traefik.enable=false
+     - traefik.http.services.homer.loadbalancer.server.port=8080
+     - traefik.http.routers.homer.rule=PathPrefix(`/start`)
+    environment:
+      - UID=1000
+      - GID=1000
+    volumes:
+      - ${DOCKER_DIR:-./}/homer/assets:/www/assets
