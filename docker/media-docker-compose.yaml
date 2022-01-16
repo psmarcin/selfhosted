@@ -66,7 +66,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
-      - traefik.http.routers.overseerr.rule=PathPrefix(`/o`)
+      - traefik.http.routers.overseerr.rule=Host(`${OVERSEERR_DOMAIN:-}`)
       # - traefik.http.routers.overseerr.tls=true
       # - traefik.http.routers.overseerr.tls.certresolver=le
       # - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
