@@ -23,7 +23,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.torrent.loadbalancer.server.port=9091
       - traefik.http.routers.torrent.rule=PathPrefix(`/`)
-      - traefik.http.middlewares.torrent.basicauth.users=${BASIC_AUTH}
+      - "traefik.http.middlewares.test-ipwhitelist.ipwhitelist.sourcerange=${IP_WHITELIST}"
     environment:
       - PUID=1000
       - PGID=1000
