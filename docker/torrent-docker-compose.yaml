@@ -23,7 +23,8 @@ services:
       - traefik.enable=true
       - traefik.http.services.torrent.loadbalancer.server.port=9091
       - traefik.http.routers.torrent.rule=PathPrefix(`/`)
-      - "traefik.http.middlewares.test-ipwhitelist.ipwhitelist.sourcerange=${IP_WHITELIST}"
+      - traefik.http.routers.torrent.middlewares=torrent-ipw@docker
+      - traefik.http.middlewares.torrent-ipw.ipwhitelist.sourcerange=${IP_WHITELIST}
     environment:
       - PUID=1000
       - PGID=1000
