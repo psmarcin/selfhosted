@@ -31,7 +31,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
-      - TRANSMISSION_WEB_HOME=/flood-for-transmission/
+      # - TRANSMISSION_WEB_HOME=/flood-for-transmission/
     volumes:
       - /volume1/docker/transmission:/config
       - /volume1/docker/downloads:/downloads
