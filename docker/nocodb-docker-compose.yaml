@@ -9,6 +9,10 @@ services:
     restart: always
     environment:
       NC_DB: "pg://postgres:5432?u=ncdb_user&p=pass&d=ncdb"
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.ncdb.loadbalancer.server.port=8080
+      - traefik.http.routers.ncdb.rule=Host(`${NCDB_DOMAIN:-}`)
 
 volumes:
   utils_pgdata:
