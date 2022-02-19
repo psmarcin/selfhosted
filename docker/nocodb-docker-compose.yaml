@@ -8,7 +8,7 @@ services:
       - "9205:8080"
     restart: always
     environment:
-      NC_DB: "pg://postgres:5432?u=postgres&p=password&d=nocodb"
+      NC_DB: "pg://postgres:5432?u=ncdb_user&p=pass&d=ncdb"
 
 volumes:
   utils_pgdata:
