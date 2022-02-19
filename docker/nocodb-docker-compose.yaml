@@ -1,9 +1,6 @@
 version: "2.4"
 services:
   nocodb:
-    depends_on:
-      postgres:
-        condition: service_healthy
     image: nocodb/nocodb:latest
     networks:
       - utilites
