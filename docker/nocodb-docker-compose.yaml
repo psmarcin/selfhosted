@@ -5,7 +5,7 @@ services:
     networks:
       - utilites
     ports:
-      - "9204:8080"
+      - "9205:8080"
     restart: always
     environment:
       NC_DB: "pg://postgres:5432?u=postgres&p=password&d=nocodb"
