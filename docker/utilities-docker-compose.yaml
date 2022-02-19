@@ -1,9 +1,9 @@
 version: "2.4"
 services:
-  watchtower:
-    image: containrrr/watchtower 
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  # watchtower:
+  #   image: containrrr/watchtower 
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
       
   redis:
     container_name: redis
@@ -26,7 +26,7 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    mem_limit: 100m
+    mem_limit: 256m
     mem_reservation: 50m
 
 volumes:
