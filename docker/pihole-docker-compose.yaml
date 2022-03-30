@@ -1,0 +1,24 @@
+version: "2.4"
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - '53:53/tcp'
+      - '53:53/udp'
+      - '9203:80/tcp'
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DIR:-./}pihole:/etc/pihole
+      - ${DOCKER_DIR:-./}dnsmasq.d:/etc/dnsmasq.d
+    environment:
+      # - PROXY_LOCATION=pihole
+      # - VIRTUAL_PORT=80
+      # - DNSMASQ_LISTENING=all
+      - WEBPASSWORD=${WEBPASS:-pass}
+      - DNS1=1.1.1.1
+      - DNS2=1.0.0.1
+      - DNSMASQ_USER:root
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
