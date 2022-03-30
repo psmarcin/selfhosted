@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKER_DIR:-./}pihole:/etc/pihole
-      - ${DOCKER_DIR:-./}dnsmasq.d:/etc/dnsmasq.d
+      - ${DOCKER_DIR:-./}pihole/dnsmasq.d:/etc/dnsmasq.d
     environment:
       # - PROXY_LOCATION=pihole
       # - VIRTUAL_PORT=80
