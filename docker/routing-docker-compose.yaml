@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
 
   cloudflared:
-    image: cloudflare/cloudflared
+    image: cloudflare/cloudflared:2022.3.4
     container_name: cloudflared
     volumes:
       - ${DOCKER_DIR:-.}/cloudflared/config:/etc/cloudflared
