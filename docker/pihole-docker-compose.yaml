@@ -15,7 +15,7 @@ services:
       - WEBPASSWORD=${WEBPASS:-pass}
       - DNS1=1.1.1.1
       - DNS2=1.0.0.1
-      - DNSMASQ_USER=pihole
+      - DNSMASQ_USER=root
     dns:
       - 1.1.1.1
       - 1.0.0.1
