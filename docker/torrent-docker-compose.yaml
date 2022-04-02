@@ -17,7 +17,7 @@ services:
     mem_reservation: 50m
 
   torrent:
-    image: ghcr.io/linuxserver/transmission:version-3.00
+    image: ghcr.io/linuxserver/transmission:latest
     network_mode: service:vpn
     labels:
       - traefik.enable=true
