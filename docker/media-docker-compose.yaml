@@ -53,6 +53,7 @@ services:
     image: sctx/overseerr:latest
     networks:
       - media
+      - cloudflared
     # mem_limit: 256m
     # mem_reservation: 64m
     ports:
@@ -94,3 +95,6 @@ networks:
   media:
     external:
       name: media
+  cloudflared:
+    external:
+      name: cloudflared
