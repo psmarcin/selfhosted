@@ -4,6 +4,8 @@ services:
     image: traefik:latest        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
     network_mode: "host"
+    networks:
+      - cloudflared
     mem_limit: 48m
     mem_reservation: 24m
     command:
@@ -32,7 +34,7 @@ services:
     container_name: cloudflared
     volumes:
       - ${DOCKER_DIR:-.}/cloudflared/config:/etc/cloudflared
-    command: tunnel --config /etc/cloudflared/config.yaml run
+    command: tunnel run
     restart: always
     networks:
       - cloudflared
