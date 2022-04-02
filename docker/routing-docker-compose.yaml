@@ -32,7 +32,7 @@ services:
     container_name: cloudflared
     volumes:
       - ${DOCKER_DIR:-.}/cloudflared/config:/etc/cloudflared
-    command: /usr/local/bin/cloudflared tunnel run
+    command: cloudflared tunnel run
     restart: always
     networks:
       - cloudflared
