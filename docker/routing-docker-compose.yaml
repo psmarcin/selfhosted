@@ -3,8 +3,7 @@ services:
   proxy:
     image: traefik:latest        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
-    networks:
-      - cloudflared
+    network_mode: "host"
     mem_limit: 48m
     mem_reservation: 24m
     command:
@@ -31,13 +30,11 @@ services:
   cloudflared:
     image: cloudflare/cloudflared:2022.3.4
     container_name: cloudflared
+    network_mode: "host"
     volumes:
       - ${DOCKER_DIR:-.}/cloudflared/config:/etc/cloudflared
     command: tunnel run
     restart: always
-    networks:
-      - cloudflared
-
 
   uptime:
     container_name: uptime
@@ -61,8 +58,6 @@ services:
   homer:
     image: b4bz/homer:latest
     container_name: homer
-    networks:
-      - cloudflared
     ports:
       - "9200:8080"
     restart: unless-stopped
