@@ -31,8 +31,8 @@ services:
     image: cloudflare/cloudflared:2022.3.4
     container_name: cloudflared
     volumes:
-      - ${DOCKER_DIR:-.}/cloudflared/config:~/.cloudflared/
-    command: tunnel run
+      - ${DOCKER_DIR:-.}/cloudflared/config:/etc/cloudflared
+    command: tunnel --config /etc/cloudflared/config.yaml run
     restart: always
     networks:
       - cloudflared
