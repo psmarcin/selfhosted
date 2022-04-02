@@ -13,8 +13,8 @@ services:
     volumes:
       - pl_data:/usr/src/paperless/data
       - pl_media:/usr/src/paperless/media
-      - ${ROOT_DIR:-./}export:/usr/src/paperless/export
-      - ${ROOT_DIR:-./}/consume:/usr/src/paperless/consume
+      - ${ROOT_DIR:-.}/export:/usr/src/paperless/export
+      - ${ROOT_DIR:-.}/consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_REDIS: redis://redis:6379
       PAPERLESS_DBHOST: postgres
