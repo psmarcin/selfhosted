@@ -1,10 +1,15 @@
 version: "2.4"
 services:
-  # watchtower:
-  #   image: containrrr/watchtower 
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-      
+   watchtower:
+     container_name: watchtower
+     image: containrrr/watchtower
+     environment:
+       WATCHTOWER_POLL_INTERVAL: 604800
+       WATCHTOWER_ROLLING_RESTART: true
+       WATCHTOWER_CLEANUP: true
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+
   redis:
     container_name: redis
     image: redis:6.0
