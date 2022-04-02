@@ -3,7 +3,6 @@ services:
   proxy:
     image: traefik:latest        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
-    network_mode: "host"
     networks:
       - cloudflared
     mem_limit: 48m
