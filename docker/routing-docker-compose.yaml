@@ -29,7 +29,7 @@ services:
 
   uptime:
     container_name: uptime
-    image: louislam/uptime-kuma:1.11.1
+    image: louislam/uptime-kuma:latest
     mem_limit: 128m
     mem_reservation: 64m
     labels:
