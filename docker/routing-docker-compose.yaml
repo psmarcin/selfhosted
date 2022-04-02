@@ -27,6 +27,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
 
+  cloudflared:
+    image: cloudflare/cloudflared
+    container_name: cloudflared
+    volumes:
+      - ${DOCKER_DIR:-.}/cloudflared/config:/etc/cloudflared
+    command: /usr/local/bin/cloudflared tunnel run
+    restart: always
+    networks:
+      - cloudflared
+
+
   uptime:
     container_name: uptime
     image: louislam/uptime-kuma:latest
@@ -61,3 +72,7 @@ services:
       - GID=1000
     volumes:
       - ${DOCKER_DIR:-./}/homer/assets:/www/assets
+
+networks:
+  cloudflared:
+    name: cloudflared
