@@ -55,7 +55,7 @@ services:
     ports:
       - "9090:3001"
     volumes:
-      - /volume1/docker/uptime/data:/app/data
+      - ${DOCKER_DIR:-.}/uptime/data:/app/data
   
   homer:
     image: b4bz/homer:latest
@@ -71,7 +71,7 @@ services:
       - UID=1000
       - GID=1000
     volumes:
-      - ${DOCKER_DIR:-./}/homer/assets:/www/assets
+      - ${DOCKER_DIR:-.}/homer/assets:/www/assets
 
 networks:
   cloudflared:
