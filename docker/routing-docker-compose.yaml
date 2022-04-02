@@ -61,6 +61,8 @@ services:
   homer:
     image: b4bz/homer:latest
     container_name: homer
+    networks:
+      - cloudflared
     ports:
       - "9200:8080"
     restart: unless-stopped
