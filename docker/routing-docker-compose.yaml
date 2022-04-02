@@ -1,13 +1,13 @@
 version: "2.4"
 services:
   proxy:
-    image: traefik:v2.5.5        # Review traefik documentation https://doc.traefik.io/traefik/
+    image: traefik:latest        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
     network_mode: "host"
     mem_limit: 48m
     mem_reservation: 24m
     command:
-      #      - "--log.level=DEBUG"
+      - "--log.level=DEBUG"
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
