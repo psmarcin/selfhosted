@@ -68,8 +68,6 @@ services:
       - ${DOCKER_DIR:-.}/homer/assets:/www/assets
 
 networks:
-  cloudflared:
-    name: cloudflared
   bridge:
     external:
       name: bridge
