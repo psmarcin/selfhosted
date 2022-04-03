@@ -39,6 +39,8 @@ services:
   uptime:
     container_name: uptime
     image: louislam/uptime-kuma:latest
+    networks:
+      - bridge
     mem_limit: 128m
     mem_reservation: 64m
     labels:
@@ -53,6 +55,8 @@ services:
     image: b4bz/homer:latest
     container_name: homer
     restart: unless-stopped
+    networks:
+      - bridge
     labels:
       - traefik.enable=true
       - traefik.http.services.homer.loadbalancer.server.port=8080
@@ -66,3 +70,6 @@ services:
 networks:
   cloudflared:
     name: cloudflared
+  bridge:
+    external:
+      name: bridge
