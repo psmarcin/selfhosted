@@ -46,7 +46,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.uptime.loadbalancer.server.port=3001
       - traefik.http.routers.uptime.rule=Host(`${UPTIME_DOMAIN:-}`)
-      - traefik.http.middlewares.uptime.compress=true
+      - traefik.http.routers.uptime.tls=false
     volumes:
       - ${DOCKER_DIR:-.}/uptime/data:/app/data
   
