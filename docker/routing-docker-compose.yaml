@@ -66,8 +66,3 @@ services:
       - GID=1000
     volumes:
       - ${DOCKER_DIR:-.}/homer/assets:/www/assets
-
-networks:
-  bridge:
-    external:
-      name: bridge
