@@ -1,18 +1,19 @@
 version: "2.4"
 services:
   vpn:
-    image: ghcr.io/bubuntux/nordvpn:latest
+    image: ghcr.io/bubuntux/nordlynx:latest
     cap_add:
       - NET_ADMIN               # Required
-      - NET_RAW                 # Required
-      - SYS_MODULE
+      # - NET_RAW                 # Required
+      # - SYS_MODULE
     sysctls:
       - net.ipv4.conf.eth0.rp_filter=2
     environment: # Review https://github.com/bubuntux/nordvpn#environment-variables
-      - 'USER=${VPN_USER}'     # Required
-      - 'PASS=${VPN_PASS}'         # Required
-      - TECHNOLOGY=NordLynx
-      - CONNECTION=p2p
+      - 'PRIVATE_KEY=${VPN_KEY}' #required
+      # - 'USER=${VPN_USER}'     # Required
+      # - 'PASS=${VPN_PASS}'         # Required
+      # - TECHNOLOGY=NordLynx
+      # - CONNECTION=p2p
     restart: unless-stopped
     mem_limit: 256m
     mem_reservation: 50m
