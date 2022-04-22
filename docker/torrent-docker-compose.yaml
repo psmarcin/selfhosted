@@ -13,7 +13,7 @@ services:
       - 'PASS=${VPN_PASS}'         # Required
       - TECHNOLOGY=NordLynx
       - CONNECTION=p2p
-      - NETWORK=192.168.1.0/24
+      - NETWORK=192.168.50.0/24
     restart: unless-stopped
     mem_limit: 256m
     mem_reservation: 50m
