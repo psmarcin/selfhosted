@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   vpn:
-    image: azinchen/nordvpn:master
+    image: ghcr.io/bubuntux/nordvpn:latest
     cap_add:
       - NET_ADMIN               # Required
       - NET_RAW                 # Required
