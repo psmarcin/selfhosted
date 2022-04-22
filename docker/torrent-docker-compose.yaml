@@ -7,7 +7,7 @@ services:
       - NET_RAW                 # Required
       - SYS_MODULE
     sysctls:
-      - net.ipv6.conf.all.disable_ipv6=1
+      - net.ipv4.conf.eth0.rp_filter=2
     environment: # Review https://github.com/bubuntux/nordvpn#environment-variables
       - 'USER=${VPN_USER}'     # Required
       - 'PASS=${VPN_PASS}'         # Required
