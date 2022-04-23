@@ -25,7 +25,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.torrent.loadbalancer.server.port=9091
       - traefik.http.routers.torrent.rule=PathPrefix(`/`)
-      - traefik.http.routers.torrent.middlewares=torrent-ipw@docker,torrent-ratelimit@docker
+      # - traefik.http.routers.torrent.middlewares=torrent-ipw@docker,torrent-ratelimit@docker
       # - traefik.http.middlewares.torrent-ipw.ipwhitelist.sourcerange=${IP_WHITELIST}
       - "traefik.http.middlewares.torrent-ratelimit.ratelimit.average=100"
       - "traefik.http.middlewares.torrent-ratelimit.ratelimit.burst=50"
