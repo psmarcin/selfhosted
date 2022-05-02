@@ -57,6 +57,8 @@ services:
     container_name: homer
     restart: unless-stopped
     network_mode: bridge
+    ports:
+      - "9200:8080"
     labels:
       - traefik.enable=true
       - traefik.http.services.homer.loadbalancer.server.port=8080
