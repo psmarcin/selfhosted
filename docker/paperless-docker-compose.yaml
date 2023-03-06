@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   paperless:
-    image: jonaswinkler/paperless-ng
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
     networks:
       - utilites
     container_name: paperless
