@@ -1,0 +1,12 @@
+version: "2.4"
+services:
+  home-assistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: home-assistant
+    environment:
+      - TZ="Europe/Warsaw"
+    ports:
+      - "8123:8123"
+    volumes:
+      - ${DOCKER_DIR:-./}/home-assistant/config:/config
+    restart: unless-stopped
