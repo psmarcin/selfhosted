@@ -1,13 +1,26 @@
 version: "2.4"
 services:
-  home-assistant:
-    image: ghcr.io/home-assistant/home-assistant:stable
-    container_name: home-assistant
+  #  home-assistant:
+  #    image: ghcr.io/home-assistant/home-assistant:stable
+  #    container_name: home-assistant
+  #    network_mode: host
+  #    environment:
+  #      - TZ="Europe/Warsaw"
+  #    ports:
+  #      - "8123:8123"
+  #    volumes:
+  #      - ${DOCKER_DIR:-./}/home-assistant/config:/config
+  #    restart: unless-stopped
+  homebridge:
+    image: oznu/homebridge:latest
+    restart: always
     network_mode: host
-    environment:
-      - TZ="Europe/Warsaw"
-    ports:
-      - "8123:8123"
     volumes:
-      - ${DOCKER_DIR:-./}/home-assistant/config:/config
-    restart: unless-stopped
+      - ${DOCKER_DIR:-./}/homebridge:/homebridge
+    ports:
+      - "8581:8581"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10mb"
+        max-file: "1"
