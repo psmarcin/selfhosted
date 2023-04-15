@@ -28,6 +28,7 @@ services:
       PAPERLESS_ADMIN_USER: ${A_USER:-ps}
       PAPERLESS_ADMIN_PASSWORD: ${A_PASS:-ps123}
       PAPERLESS_CONSUMER_RECURSIVE: "true"
+      PAPERLESS_URL: ${A_URL:-http://localhost:9099}
 
 volumes:
   pl_data:
