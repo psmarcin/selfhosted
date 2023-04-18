@@ -3,7 +3,7 @@ services:
   vpn:
     image: ghcr.io/bubuntux/nordlynx:latest
     container_name: nordlynx
-    restart: unless-stopped
+#    restart: unless-stopped
     security_opt:
       - no-new-privileges:true
     cap_add:
