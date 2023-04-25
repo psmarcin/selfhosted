@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   vpn:
-    image: azinchen/nordvpn:v2.6.0
+    image: ghcr.io/azinchen/nordvpn:v2.6.0
     cap_add:
       - NET_ADMIN
     devices:
