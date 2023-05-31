@@ -65,5 +65,5 @@ volumes:
 
 networks:
   utilites:
-    external:
-      name: utilites
+    name: utilites
+    external: true
