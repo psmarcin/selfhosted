@@ -51,7 +51,7 @@ services:
     volumes:
       - /volume1/docker/gitea:/data
     ports:
-      - "3000:3000"
+      - "9200:3000"
       - "222:22"
     depends_on:
       - postgres
