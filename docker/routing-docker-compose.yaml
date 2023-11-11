@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
 
   cloudflared:
-    image: cloudflare/cloudflared:2023.4.0
+    image: cloudflare/cloudflared:2023.10.0
     container_name: cloudflared
     network_mode: "host"
     volumes:
