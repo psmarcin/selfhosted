@@ -34,6 +34,50 @@ services:
     mem_limit: 256m
     mem_reservation: 50m
 
+  wireguard:
+    image: linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ${DOCKER_DIR:-.}/wireguard/config:/config
+    environment:
+      PEERS: 2
+      SERVERURL: ${SERVERURL:-}
+      SERVERPORT: 51899
+    ports:
+      - "9203:5000"
+      - "51899:51899/udp"
+    restart: unless-stopped
+
+  # WireGuard-UI service
+  wireguard-ui:
+    image: ngoduykhanh/wireguard-ui:latest
+    container_name: wireguard-ui
+    depends_on:
+      - wireguard
+    cap_add:
+      - NET_ADMIN
+    # Use the network of the 'wireguard' service
+    # This enables to show active clients in the status page
+    network_mode: service:wireguard
+    environment:
+      - EMAIL_FROM_ADDRESS=dev@psmarcin.dev
+      - EMAIL_FROM_NAME=psdev
+      - SESSION_SECRET=${SESSION_SECRET:-}
+      - WGUI_USERNAME=admin
+      - WGUI_PASSWORD=password
+      - WGUI_MANAGE_START=true
+      - WGUI_MANAGE_RESTART=true
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+    volumes:
+      - ${DOCKER_DIR:-.}/wireguard/db:/app/db
+      - ${DOCKER_DIR:-.}/wireguard/config:/etc/wireguard
+
 volumes:
   utils_pgdata:
     name: utils_pgdata
