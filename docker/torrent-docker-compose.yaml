@@ -27,9 +27,9 @@ services:
       - "traefik.http.middlewares.torrent-ratelimit.ratelimit.average=100"
       - "traefik.http.middlewares.torrent-ratelimit.ratelimit.burst=50"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
+      - PUID=1027
+      - PGID=100
+      - TZ=Europe/Warsaw
       # - TRANSMISSION_WEB_HOME=/flood-for-transmission/
     volumes:
       - /volume1/docker/transmission:/config
