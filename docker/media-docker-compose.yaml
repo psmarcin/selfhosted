@@ -3,6 +3,7 @@ services:
   jackett:
     container_name: jackett
     image: linuxserver/jackett:latest
+    dns: 1.1.1.1
     networks:
       - media
     # mem_limit: 256m
