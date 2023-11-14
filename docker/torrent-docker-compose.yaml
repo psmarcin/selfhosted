@@ -15,6 +15,7 @@ services:
       - RECREATE_VPN_CRON=5 */3 * * *
       - NETWORK=192.168.50.0/24;192.168.1.0/24
       - OPENVPN_OPTS=--mute-replay-warnings
+    dns: 1.1.1.1
   torrent:
     image: ghcr.io/linuxserver/transmission:latest
     network_mode: service:vpn
