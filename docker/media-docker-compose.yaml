@@ -35,6 +35,7 @@ services:
     depends_on:
       - jackett
     restart: unless-stopped
+    dns: 1.1.1.1
 
   radarr:
     container_name: radarr
@@ -56,6 +57,7 @@ services:
     depends_on:
       - jackett
     restart: unless-stopped
+    dns: 1.1.1.1
 
   overseerr:
     container_name: overseerr
@@ -81,6 +83,7 @@ services:
       # - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
       # - traefik.http.middlewares.overseerr.redirectscheme.permanent=true
       # - traefik.http.middlewares.overseerr.compress=true
+    dns: 1.1.1.1
 
   bazarr:
     image: lscr.io/linuxserver/bazarr
@@ -98,6 +101,7 @@ services:
     ports:
       - "9201:6767"
     restart: unless-stopped
+    dns: 1.1.1.1
 
 networks:
   media:
