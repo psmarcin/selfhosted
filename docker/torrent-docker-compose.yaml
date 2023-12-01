@@ -1,20 +1,17 @@
 version: "2.4"
 services:
   vpn:
-    image: ghcr.io/azinchen/nordvpn:2.6.0
+    image: qmcgaw/gluetun:latest
     cap_add:
       - NET_ADMIN
     devices:
-      - /dev/net/tun
+      - /dev/net/tun:/dev/net/tun
     environment:
-      - USER=${USER:-}
-      - PASS=${PASS:-}
-      - COUNTRY=UA;Hong Kong;
-      - GROUP=legacy_p2p
-      - RANDOM_TOP=10
-      - RECREATE_VPN_CRON=5 */3 * * *
-      - NETWORK=192.168.50.0/24;192.168.1.0/24
-      - OPENVPN_OPTS=--mute-replay-warnings
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - VPN_TYPE=openvpn # or wireguard
+      - OPENVPN_USER=${USER:-}
+      - OPENVPN_PASSWORD=${PASS:-}
+      - SERVER_COUNTRIES=Ukraine,Hong Kong
     dns: 1.1.1.1
   torrent:
     image: ghcr.io/linuxserver/transmission:latest
@@ -33,8 +30,8 @@ services:
       - TZ=Europe/Warsaw
       # - TRANSMISSION_WEB_HOME=/flood-for-transmission/
     volumes:
-      - /volume1/docker/transmission:/config
-      - /volume1/docker/downloads:/downloads
-      - /volume1/docker/transmission/watch:/watch
+      - ${DOCKER_DIR:-./}/transmission:/config
+      - ${DOCKER_DIR:-./}/downloads:/downloads
+      - ${DOCKER_DIR:-./}/transmission/watch:/watch
     mem_limit: 128m
     mem_reservation: 50m
