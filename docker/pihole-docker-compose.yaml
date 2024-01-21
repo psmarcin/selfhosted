@@ -7,7 +7,7 @@ services:
     ports:
       - '53:53/tcp'
       - '53:53/udp'
-      - '9203:80/tcp'
+      - '80:9203/tcp'
     restart: unless-stopped
     volumes:
       - ${DOCKER_DIR:-./}pihole:/etc/pihole
