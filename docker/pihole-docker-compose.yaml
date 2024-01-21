@@ -3,11 +3,11 @@ services:
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
-    network_mode: host
+#    network_mode: host
     ports:
       - '53:53/tcp'
       - '53:53/udp'
-      - '80:9203/tcp'
+      - '9203:80/tcp'
     restart: unless-stopped
     volumes:
       - ${DOCKER_DIR:-./}pihole:/etc/pihole
