@@ -16,7 +16,7 @@ services:
     volumes:
       - /volume1/docker/plex:/config
       - /volume1/docker/downloads:/volume1/docker/downloads
-      - /volume1/docker/transmission-openvpn/completed:/volume1/docker/transmission-openvpn/completed
+#      - /volume1/docker/transmission-openvpn/completed:/volume1/docker/transmission-openvpn/completed
     labels:
       - traefik.enable=true
       - traefik.http.services.plex.loadbalancer.server.port=32400
