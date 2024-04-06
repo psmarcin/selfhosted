@@ -15,6 +15,8 @@ services:
       - pl_media:/usr/src/paperless/media
       - ${ROOT_DIR:-.}/export:/usr/src/paperless/export
       - ${ROOT_DIR:-.}/consume:/usr/src/paperless/consume
+    labels:
+      - docker-volume-backup.stop-during-backup=true
     environment:
       PAPERLESS_REDIS: redis://redis:6379
       PAPERLESS_DBHOST: postgres
@@ -32,11 +34,11 @@ services:
 
 volumes:
   pl_data:
-    external:
-      name: paperless_pl_data
+    name: paperless_pl_data
+    external: true
   pl_media:
-    external:
-      name: paperless_pl_media
+    name: paperless_pl_media
+    external: true
 
 networks:
   utilites:
