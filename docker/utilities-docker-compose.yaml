@@ -39,7 +39,6 @@ services:
   backup:
     image: offen/docker-volume-backup:v2
     restart: always
-    entrypoint: backup
     environment:
       BACKUP_FILENAME: backup-%Y-%m-%dT%H-%M-%S.{{ .Extension }}
       BACKUP_PRUNING_PREFIX: backup-
