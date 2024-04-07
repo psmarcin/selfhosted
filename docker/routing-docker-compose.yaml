@@ -1,18 +1,19 @@
 version: "2.4"
 services:
   proxy:
-    image: traefik:latest        # Review traefik documentation https://doc.traefik.io/traefik/
+    image: traefik:v2.11        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
-    network_mode: "host"
+#    network_mode: "host"
     mem_limit: 128m
     mem_reservation: 64m
     command:
-      # - "--log.level=DEBUG"
+      - --log.level=DEBUG
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:9091
       - --entrypoints.websecure.address=:9443
+      - --api.disabledashboardad=true
       # - "--certificatesResolvers.le.acme.email=${EMAIL}"
       # - "--certificatesResolvers.le.acme.storage=acme.json"
       # - "--certificatesResolvers.le.acme.tlsChallenge=true"
@@ -38,16 +39,14 @@ services:
 
   uptime:
     container_name: uptime
-    image: louislam/uptime-kuma:latest
+    image: louislam/uptime-kuma:1-alpine
     network_mode: bridge
     mem_limit: 256m
     mem_reservation: 128m
-    ports:
-      - "9090:3001"
     labels:
       - traefik.enable=true
       - traefik.http.services.uptime.loadbalancer.server.port=3001
-      - traefik.http.routers.uptime.rule=Host(`${UPTIME_DOMAIN:-}`)
+      - traefik.http.routers.uptime.rule=Host(`up.home.local`)
       - traefik.http.routers.uptime.tls=false
     volumes:
       - ${DOCKER_DIR:-.}/uptime/data:/app/data
@@ -57,8 +56,10 @@ services:
     container_name: homer
     restart: unless-stopped
     network_mode: bridge
-    ports:
-      - "9200:8080"
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.homer.loadbalancer.server.port=8080
+      - traefik.http.routers.homer.rule=Host(`home.local`)
     environment:
       - PUID=1027
       - PGID=100
