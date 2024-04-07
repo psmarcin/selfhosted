@@ -40,7 +40,8 @@ services:
   uptime:
     container_name: uptime
     image: louislam/uptime-kuma:1-alpine
-    network_mode: bridge
+    networks:
+      - proxy
     mem_limit: 256m
     mem_reservation: 128m
     labels:
@@ -55,7 +56,8 @@ services:
     image: b4bz/homer:latest
     container_name: homer
     restart: unless-stopped
-    network_mode: bridge
+    networks:
+      - proxy
     labels:
       - traefik.enable=true
       - traefik.http.services.homer.loadbalancer.server.port=8080
@@ -66,3 +68,7 @@ services:
       - TZ=Europe/Warsaw
     volumes:
       - ${DOCKER_DIR:-.}/homer/assets:/www/assets
+
+networks:
+  proxy:
+    name: proxy
