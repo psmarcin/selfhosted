@@ -4,12 +4,13 @@ services:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     networks:
       - utilites
+      - proxy
     container_name: paperless
     restart: unless-stopped
     # mem_limit: 1g
     # mem_reservation: 512m
-    ports:
-      - "9099:8000"
+#    ports:
+#      - "9099:8000"
     volumes:
       - pl_data:/usr/src/paperless/data
       - pl_media:/usr/src/paperless/media
@@ -17,6 +18,9 @@ services:
       - ${ROOT_DIR:-.}/consume:/usr/src/paperless/consume
     labels:
       - docker-volume-backup.stop-during-backup=true
+      - traefik.enable=true
+      - traefik.http.services.paperless.loadbalancer.server.port=8000
+      - traefik.http.routers.paperless.rule=Host(`paper.home.local`)
     environment:
       PAPERLESS_REDIS: redis://redis:6379
       PAPERLESS_DBHOST: postgres
@@ -42,5 +46,8 @@ volumes:
 
 networks:
   utilites:
-    external:
-      name: utilites
+    name: utilites
+    external: true
+  proxy:
+    name: proxy
+    external: true

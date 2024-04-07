@@ -3,31 +3,36 @@ services:
   jackett:
     container_name: jackett
     image: linuxserver/jackett:latest
-    dns: 1.1.1.1
     networks:
       - media
+      - proxy
     # mem_limit: 256m
     # mem_reservation: 50m
-    ports:
-      - "9095:9117"
+#    ports:
+#      - "9095:9117"
     volumes:
       - ${DOCKER_DIR:-./}/jackett/config:/config
       - ${DOCKER_DIR:-./}/jackett/downloads:/downloads
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.jackett.loadbalancer.server.port=9117
+      - traefik.http.routers.jackett.rule=Host(`jackett.home.local`)
 
   sonarr:
     container_name: sonarr
     image: linuxserver/sonarr:latest
     networks:
       - media
+      - proxy
     # mem_limit: 256m
     # mem_reservation: 50m
     environment:
       - PUID=1027
       - PGID=100
       - TZ=Europe/Warsaw
-    ports:
-      - "9094:8989"
+#    ports:
+#      - "9094:8989"
     volumes:
       - ${DOCKER_DIR:-./}/sonarr/config:/config
       - ${DOCKER_DIR:-./}/downloads:/downloads
@@ -35,21 +40,25 @@ services:
     depends_on:
       - jackett
     restart: unless-stopped
-    dns: 1.1.1.1
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      - traefik.http.routers.sonarr.rule=Host(`tv.home.local`)
 
   radarr:
     container_name: radarr
     image: linuxserver/radarr:latest
     networks:
       - media
+      - proxy
     # mem_limit: 256m
     # mem_reservation: 50m
     environment:
       - PUID=1027
       - PGID=100
       - TZ=Europe/Warsaw
-    ports:
-      - "9096:7878"
+#    ports:
+#      - "9096:7878"
     volumes:
       - ${DOCKER_DIR:-./}/radarr/config:/config
       - ${DOCKER_DIR:-./}/downloads:/downloads
@@ -57,17 +66,21 @@ services:
     depends_on:
       - jackett
     restart: unless-stopped
-    dns: 1.1.1.1
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.radarr.loadbalancer.server.port=7878
+      - traefik.http.routers.radarr.rule=Host(`movie.home.local`)
 
   overseerr:
     container_name: overseerr
     image: sctx/overseerr:latest
     networks:
       - media
+      - proxy
     # mem_limit: 256m
     # mem_reservation: 64m
-    ports:
-      - "9098:5055"
+#    ports:
+#      - "9098:5055"
     volumes:
       - ${DOCKER_DIR:-./}/overseerr/config:/app/config
     depends_on:
@@ -83,13 +96,13 @@ services:
       # - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
       # - traefik.http.middlewares.overseerr.redirectscheme.permanent=true
       # - traefik.http.middlewares.overseerr.compress=true
-    dns: 1.1.1.1
 
   bazarr:
     image: lscr.io/linuxserver/bazarr
     container_name: bazarr
     networks:
       - media
+      - proxy
     environment:
       - PUID=1027
       - PGID=100
@@ -98,12 +111,18 @@ services:
       - ${DOCKER_DIR:-./}/bazarr/config:/config
       - ${DOCKER_DIR:-./}/downloads/movies:/movies
       - ${DOCKER_DIR:-./}/downloads/tv:/tv
-    ports:
-      - "9201:6767"
+#    ports:
+#      - "9201:6767"
     restart: unless-stopped
-    dns: 1.1.1.1
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.bazarr.loadbalancer.server.port=6767
+      - traefik.http.routers.bazarr.rule=Host(`subtitles.home.local`)
 
 networks:
   media:
-    external:
-      name: media
+    name: media
+    external: true
+  proxy:
+    name: proxy
+    external: true
