@@ -2,7 +2,7 @@ version: "2.4"
 services:
   pihole:
     container_name: pihole
-    image: pihole/pihole:latest
+    image: pihole/pihole:2024.03.2
 #    network_mode: host
     ports:
       - '53:53/tcp'
