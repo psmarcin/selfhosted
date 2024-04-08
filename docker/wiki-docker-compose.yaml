@@ -1,12 +1,12 @@
 version: "2.4"
-services:
-  wiki:
-    image: ghcr.io/requarks/wiki:2
-    environment:
-      DB_TYPE: sqlite
-      DB_FILEPATH: /data/db.sqlite
-    restart: unless-stopped
-    volumes:
-      - ${DOCKER_DIR:-./}wiki/data:/data/
-    ports:
-      - "9202:3000"
+#services:
+#  wiki:
+#    image: ghcr.io/requarks/wiki:2
+#    environment:
+#      DB_TYPE: sqlite
+#      DB_FILEPATH: /data/db.sqlite
+#    restart: unless-stopped
+#    volumes:
+#      - ${DOCKER_DIR:-./}wiki/data:/data/
+#    ports:
+#      - "9202:3000"
