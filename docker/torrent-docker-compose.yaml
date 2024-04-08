@@ -2,6 +2,8 @@ version: "2.4"
 services:
   vpn:
     image: qmcgaw/gluetun:latest
+    networks:
+      - proxy
     cap_add:
       - NET_ADMIN
     devices:
@@ -13,17 +15,13 @@ services:
       - OPENVPN_PASSWORD=${PASS:-}
       - SERVER_COUNTRIES=Ukraine,Hong Kong
     dns: 1.1.1.1
-  torrent:
-    image: ghcr.io/linuxserver/transmission:latest
-    network_mode: service:vpn
     labels:
       - traefik.enable=true
       - traefik.http.services.torrent.loadbalancer.server.port=9091
       - traefik.http.routers.torrent.rule=Host(`torrent.home.local`)
-      # - traefik.http.routers.torrent.middlewares=torrent-ipw@docker,torrent-ratelimit@docker
-      # - traefik.http.middlewares.torrent-ipw.ipwhitelist.sourcerange=${IP_WHITELIST}
-      - "traefik.http.middlewares.torrent-ratelimit.ratelimit.average=100"
-      - "traefik.http.middlewares.torrent-ratelimit.ratelimit.burst=50"
+  torrent:
+    image: ghcr.io/linuxserver/transmission:latest
+    network_mode: service:vpn
     environment:
       - PUID=1027
       - PGID=100
@@ -35,3 +33,8 @@ services:
       - ${DOCKER_DIR:-./}/transmission/watch:/watch
     mem_limit: 128m
     mem_reservation: 50m
+
+networks:
+  proxy:
+    name: proxy
+    external: true
