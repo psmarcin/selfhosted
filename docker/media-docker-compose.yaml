@@ -90,7 +90,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
-      - traefik.http.routers.overseerr.rule=Host(`${OVERSEERR_DOMAIN:-}`)
+      - traefik.http.routers.overseerr.rule=Host(`video.home.local`)
       # - traefik.http.routers.overseerr.tls=true
       # - traefik.http.routers.overseerr.tls.certresolver=le
       # - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
@@ -117,7 +117,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
-      - traefik.http.routers.bazarr.rule=Host(`subtitles.home.local`)
+      - traefik.http.routers.bazarr.rule=Host(`subtitle.home.local`)
 
 networks:
   media:
