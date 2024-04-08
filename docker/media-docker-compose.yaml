@@ -18,7 +18,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.jackett.loadbalancer.server.port=9117
       - traefik.http.routers.jackett.rule=Host(`jackett.home.local`)
-
+      - traefik.docker.network=proxy
   sonarr:
     container_name: sonarr
     image: linuxserver/sonarr:latest
@@ -44,7 +44,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.sonarr.loadbalancer.server.port=8989
       - traefik.http.routers.sonarr.rule=Host(`tv.home.local`)
-
+      - traefik.docker.network=proxy
   radarr:
     container_name: radarr
     image: linuxserver/radarr:latest
@@ -70,7 +70,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.radarr.loadbalancer.server.port=7878
       - traefik.http.routers.radarr.rule=Host(`movie.home.local`)
-
+      - traefik.docker.network=proxy
   overseerr:
     container_name: overseerr
     image: sctx/overseerr:latest
@@ -91,6 +91,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
       - traefik.http.routers.overseerr.rule=Host(`video.home.local`)
+      - traefik.docker.network=proxy
       # - traefik.http.routers.overseerr.tls=true
       # - traefik.http.routers.overseerr.tls.certresolver=le
       # - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
@@ -118,7 +119,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
       - traefik.http.routers.bazarr.rule=Host(`subtitle.home.local`)
-
+      - traefik.docker.network=proxy
 networks:
   media:
     name: media
