@@ -77,26 +77,20 @@ services:
     networks:
       - media
       - proxy
-    # mem_limit: 256m
-    # mem_reservation: 64m
-#    ports:
-#      - "9098:5055"
     volumes:
       - ${DOCKER_DIR:-./}/overseerr/config:/app/config
     depends_on:
       - sonarr
       - radarr
     restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     labels:
       - traefik.enable=true
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
       - traefik.http.routers.overseerr.rule=Host(`video.home.local`)
       - traefik.docker.network=proxy
-      # - traefik.http.routers.overseerr.tls=true
-      # - traefik.http.routers.overseerr.tls.certresolver=le
-      # - traefik.http.middlewares.overseerr.redirectscheme.scheme=https
-      # - traefik.http.middlewares.overseerr.redirectscheme.permanent=true
-      # - traefik.http.middlewares.overseerr.compress=true
 
   bazarr:
     image: lscr.io/linuxserver/bazarr
