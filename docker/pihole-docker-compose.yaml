@@ -3,9 +3,11 @@ services:
   pihole:
     container_name: pihole
     image: pihole/pihole:2024.03.2
+    network_mode: host
     ports:
       - '53:53/tcp'
       - '53:53/udp'
+      - '9203:80/tcp'
     restart: unless-stopped
     volumes:
       - ${DOCKER_DIR:-./}pihole:/etc/pihole
@@ -15,8 +17,6 @@ services:
       - DNS1=1.1.1.1
       - DNS2=1.0.0.1
       - DNSMASQ_LISTENING=all
-    networks:
-      - proxy
     labels:
       - traefik.enable=true
       - traefik.http.services.pihole.loadbalancer.server.port=80
