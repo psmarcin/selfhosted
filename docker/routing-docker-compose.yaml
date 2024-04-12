@@ -64,6 +64,8 @@ services:
       - traefik.enable=true
       - traefik.http.services.homer.loadbalancer.server.port=8080
       - traefik.http.routers.homer.rule=Host(`home.local`)
+      - traefik.http.routers.homer.rule=Host(`s.home`)
+      - traefik.http.routers.homer.rule=Host(`home.lan`)
     environment:
       - PUID=1027
       - PGID=100
