@@ -6,14 +6,19 @@ services:
     hostname: changedetection
     volumes:
       - ${DOCKER_DIR:-./}/changedetection/datastore:/datastore
-    ports:
-      - "9092:5000"
+#    ports:
+#      - "9092:5000"
     restart: unless-stopped
     environment:
       - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000/?stealth=1&--disable-web-security=true
     depends_on:
       playwright-chrome:
         condition: service_started
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.changedetection.loadbalancer.server.port=5000
+      - traefik.http.routers.changedetection.rule=Host(`changedetection.home.local`)
+      - traefik.http.routers.changedetection.tls=false
   playwright-chrome:
     hostname: playwright-chrome:latest
     image: browserless/chrome
