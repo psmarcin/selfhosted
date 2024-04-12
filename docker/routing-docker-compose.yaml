@@ -34,10 +34,6 @@ services:
       - traefik.http.services.portainer.loadbalancer.server.port=9000
       - traefik.http.routers.portainer.rule=Host(`portainer.home.local`)
       - traefik.http.routers.portainer.tls=false
-      - traefik.http.services.dsm.loadbalancer.server.port=5000
-      - traefik.http.routers.dsm.rule=Host(`dsm.home.local`)
-      - traefik.http.routers.dsm.tls=false
-
   cloudflared:
     image: cloudflare/cloudflared:2023.10.0
     container_name: cloudflared
