@@ -4,6 +4,8 @@ services:
     image: ghcr.io/dgtlmoon/changedetection.io:latest
     container_name: changedetection
     hostname: changedetection
+    networks:
+      - proxy
     volumes:
       - ${DOCKER_DIR:-./}/changedetection/datastore:/datastore
 #    ports:
@@ -34,3 +36,8 @@ services:
       - CHROME_REFRESH_TIME=300000
       - DEFAULT_BLOCK_ADS=true
       - DEFAULT_STEALTH=true
+
+networks:
+  proxy:
+    name: proxy
+    external: true
