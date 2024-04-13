@@ -20,7 +20,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.changedetection.loadbalancer.server.port=5000
       - traefik.http.routers.changedetection.rule=Host(`changedetection.home.local`)
-      - traefik.http.routers.changedetection.tls=false
+      - traefik.http.routers.changedetection.tls=true
   playwright-chrome:
     hostname: playwright-chrome:latest
     image: browserless/chrome
