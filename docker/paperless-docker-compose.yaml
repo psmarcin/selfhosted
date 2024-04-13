@@ -21,6 +21,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.paperless.loadbalancer.server.port=8000
       - traefik.http.routers.paperless.rule=Host(`paper.home.local`)
+      - traefik.http.routers.paperless.tls=true
     environment:
       PAPERLESS_REDIS: redis://redis:6379
       PAPERLESS_DBHOST: postgres
