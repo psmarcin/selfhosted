@@ -41,7 +41,7 @@ services:
       - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${DOCKER_DIR:-.}/traefik/config/acme:/etc/traefik/acme
+#      - ${DOCKER_DIR:-.}/traefik/config/acme:/etc/traefik/acme
 #      - ${DOCKER_DIR:-.}/traefik/acme.json:/acme.json
     restart: unless-stopped
     labels:
