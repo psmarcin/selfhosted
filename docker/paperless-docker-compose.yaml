@@ -20,7 +20,8 @@ services:
       - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
       - traefik.http.services.paperless.loadbalancer.server.port=8000
-      - traefik.http.routers.paperless.rule=Host(`paper.home.local`)
+      - traefik.http.routers.paperless.rule=Host(`paper.local.psmarcin.dev`)
+      - traefik.http.routers.paperless.tls.certresolver=localresolver
       - traefik.http.routers.paperless.tls=true
     environment:
       PAPERLESS_REDIS: redis://redis:6379
