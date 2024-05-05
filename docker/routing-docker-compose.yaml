@@ -54,7 +54,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.portainer.loadbalancer.server.port=9000
-      - traefik.http.routers.portainer.rule=Host(`portainer.home.local`)
+      - traefik.http.routers.portainer.rule=Host(`portainer.local.psmarcin.dev`)
       - traefik.http.routers.portainer.tls=true
   cloudflared:
     image: cloudflare/cloudflared:2023.10.0
