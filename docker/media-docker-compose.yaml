@@ -17,7 +17,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.jackett.loadbalancer.server.port=9117
-      - traefik.http.routers.jackett.rule=Host(`jackett.home.local`)
+      - traefik.http.routers.jackett.rule=Host(`jackett.local.psmarcin.dev`)
+      - traefik.http.routers.jackett.tls.certresolver=localresolver
       - traefik.http.routers.jackett.tls=true
       - traefik.docker.network=proxy
   sonarr:
@@ -44,7 +45,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.sonarr.loadbalancer.server.port=8989
-      - traefik.http.routers.sonarr.rule=Host(`tv.home.local`)
+      - traefik.http.routers.sonarr.rule=Host(`tv.local.psmarcin.dev`)
+      - traefik.http.routers.sonarr.tls.certresolver=localresolver
       - traefik.http.routers.sonarr.tls=true
       - traefik.docker.network=proxy
   radarr:
@@ -71,7 +73,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.radarr.loadbalancer.server.port=7878
-      - traefik.http.routers.radarr.rule=Host(`movie.home.local`)
+      - traefik.http.routers.radarr.rule=Host(`movie.local.psmarcin.dev`)
+      - traefik.http.routers.radarr.tls.certresolver=localresolver
       - traefik.http.routers.radarr.tls=true
       - traefik.docker.network=proxy
   overseerr:
@@ -92,7 +95,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
-      - traefik.http.routers.overseerr.rule=Host(`video.home.local`)
+      - traefik.http.routers.overseerr.rule=Host(`video.local.psmarcin.dev`)
+      - traefik.http.routers.overseerr.tls.certresolver=localresolver
       - traefik.http.routers.overseerr.tls=true
       - traefik.docker.network=proxy
 
@@ -116,7 +120,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
-      - traefik.http.routers.bazarr.rule=Host(`subtitle.home.local`)
+      - traefik.http.routers.bazarr.rule=Host(`subtitle.local.psmarcin.dev`)
+      - traefik.http.routers.bazarr.tls.certresolver=localresolver
       - traefik.http.routers.bazarr.tls=true
       - traefik.docker.network=proxy
 networks:
