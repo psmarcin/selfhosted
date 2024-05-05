@@ -75,7 +75,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.uptime.loadbalancer.server.port=3001
-      - traefik.http.routers.uptime.rule=Host(`up.home.local`)
+      - traefik.http.routers.uptime.rule=Host(`up.local.psmarcin.dev`)
       - traefik.http.routers.uptime.tls=true
     volumes:
       - ${DOCKER_DIR:-.}/uptime/data:/app/data
@@ -89,7 +89,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.homer.loadbalancer.server.port=8080
-      - traefik.http.routers.homer.rule=Host(`home.lan`)
+      - traefik.http.routers.homer.rule=Host(`local.psmarcin.dev`)
       - traefik.http.routers.homer.tls=true
     environment:
       - PUID=1027
