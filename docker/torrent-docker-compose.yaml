@@ -18,7 +18,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.torrent.loadbalancer.server.port=9091
-      - traefik.http.routers.torrent.rule=Host(`torrent.home.local`)
+      - traefik.http.routers.torrent.rule=Host(`torrent.local.psmarcin.dev`)
+      - traefik.http.routers.torrent.tls.certresolver=localresolver
       - traefik.http.routers.torrent.tls=true
   torrent:
     image: ghcr.io/linuxserver/transmission:latest
