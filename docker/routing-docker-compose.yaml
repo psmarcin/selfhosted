@@ -1,21 +1,20 @@
 version: "2.4"
 services:
 #  TO Debug traefik, add whoami service
-#  whoami:
-#    image: traefik/whoami
-#    command:
-#      # It tells whoami to start listening on 2001 instead of 80
-#      - --port=2001
-#      - --name=iamfoo
-#    ports:
-#      - "8001:2001"
-#    networks:
-#      - proxy
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.services.whoami.loadbalancer.server.port=2001
-#      - traefik.http.routers.whoami.rule=Host(`who.mac.local`)
-#      - traefik.http.routers.whoami.tls=true
+  whoami:
+    image: traefik/whoami
+    command:
+      # It tells whoami to start listening on 2001 instead of 80
+      - --port=2001
+      - --name=iamfoo
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.whoami.loadbalancer.server.port=2001
+      - traefik.http.routers.whoami.rule=Host(`who.local.psmarcin.dev`)
+      - traefik.http.routers.whoami.tls=true
+      - traefik.http.routers.whoami.tls.certresolver=localresolver
   proxy:
     image: traefik:v2.11        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
@@ -35,14 +34,22 @@ services:
       - --entrypoints.web.http.redirections.entrypoint.permanent=true
       - --entrypoints.websecure.address=:9443
       - --api.disabledashboardad=true
+      - --certificatesresolvers.localresolver.acme.dnsChallenge=true
+      - --certificatesresolvers.localresolver.acme.dnsChallenge.provider=cloudflare
+#      - --certificatesresolvers.localresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.localresolver.acme.email=${ACME_EMAIL:-.}
+      - --certificatesresolvers.localresolver.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.localresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
     ports:
       - "9091:9091"
       - "9443:9443"
       - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-#      - ${DOCKER_DIR:-.}/traefik/config/acme:/etc/traefik/acme
-#      - ${DOCKER_DIR:-.}/traefik/acme.json:/acme.json
+      - ${DOCKER_DIR:-.}/traefik/letsencrypt:/letsencrypt
+    environment:
+      - CLOUDFLARE_DNS_API_TOKEN=${CF_TOKEN:-.}
+      - CLOUDFLARE_ZONE_API_TOKEN=${CF_TOKEN:-.}
     restart: unless-stopped
     labels:
       - traefik.enable=true
