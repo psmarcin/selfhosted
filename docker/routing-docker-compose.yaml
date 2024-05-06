@@ -57,7 +57,7 @@ services:
       - traefik.http.routers.portainer.rule=Host(`portainer.local.psmarcin.dev`)
       - traefik.http.routers.portainer.tls=true
   cloudflared:
-    image: cloudflare/cloudflared:2023.10.0
+    image: cloudflare/cloudflared:2024.4.1
     container_name: cloudflared
     network_mode: "host"
     volumes:
