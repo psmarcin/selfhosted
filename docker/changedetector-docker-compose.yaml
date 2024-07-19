@@ -3,7 +3,6 @@ services:
   changedetection:
     image: ghcr.io/dgtlmoon/changedetection.io:latest
     container_name: changedetection
-    hostname: changedetection
     networks:
       - proxy
     volumes:
@@ -12,8 +11,7 @@ services:
     environment:
       - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000
     depends_on:
-      playwright-chrome:
-        condition: service_started
+      - playwright-chrome
     labels:
       - traefik.enable=true
       - traefik.http.services.changedetection.loadbalancer.server.port=5000
@@ -27,6 +25,8 @@ services:
     hostname: playwright-chrome
     image: dgtlmoon/sockpuppetbrowser:latest
     restart: unless-stopped
+    networks:
+      - proxy
     environment:
       - SCREEN_WIDTH=1920
       - SCREEN_HEIGHT=1024
