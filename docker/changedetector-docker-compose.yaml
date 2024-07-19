@@ -9,8 +9,8 @@ services:
     volumes:
       - ${DOCKER_DIR:-./}/changedetection/datastore:/datastore
     restart: unless-stopped
-    #    environment:
-    #      - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000/?stealth=1&--disable-web-security=true
+    environment:
+      - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000
     depends_on:
       playwright-chrome:
         condition: service_started
