@@ -9,8 +9,8 @@ services:
     volumes:
       - ${DOCKER_DIR:-./}/changedetection/datastore:/datastore
     restart: unless-stopped
-#    environment:
-#      - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000/?stealth=1&--disable-web-security=true
+    #    environment:
+    #      - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000/?stealth=1&--disable-web-security=true
     depends_on:
       playwright-chrome:
         condition: service_started
@@ -23,14 +23,15 @@ services:
   # Used for fetching pages via Playwright+Chrome where you need Javascript support.
   # RECOMMENDED FOR FETCHING PAGES WITH CHROME
   playwright-chrome:
-      hostname: playwright-chrome
-      image: dgtlmoon/sockpuppetbrowser:latest
-      restart: unless-stopped
-      environment:
-          - SCREEN_WIDTH=1920
-          - SCREEN_HEIGHT=1024
-          - SCREEN_DEPTH=16
-          - MAX_CONCURRENT_CHROME_PROCESSES=5
+    container_name: playwright-chrome
+    hostname: playwright-chrome
+    image: dgtlmoon/sockpuppetbrowser:latest
+    restart: unless-stopped
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1024
+      - SCREEN_DEPTH=16
+      - MAX_CONCURRENT_CHROME_PROCESSES=5
 #  playwright-chrome1:
 #    hostname: playwright-chrome
 #    image: browserless/chrome:latest
