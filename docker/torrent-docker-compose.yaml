@@ -9,11 +9,12 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      - VPN_SERVICE_PROVIDER=nordvpn
-      - VPN_TYPE=openvpn # or wireguard
+      - VPN_SERVICE_PROVIDER=protonvpn
       - OPENVPN_USER=${USER:-}
       - OPENVPN_PASSWORD=${PASS:-}
+      - OPENVPN_PASSWORD=123QWE
       - SERVER_COUNTRIES=Ukraine,Hong Kong
+      - PORT_FORWARD_ONLY=on
     dns: 1.1.1.1
     labels:
       - traefik.enable=true
