@@ -12,7 +12,6 @@ services:
       - VPN_SERVICE_PROVIDER=protonvpn
       - OPENVPN_USER=${USER:-}
       - OPENVPN_PASSWORD=${PASS:-}
-      - OPENVPN_PASSWORD=123QWE
       - SERVER_COUNTRIES=Ukraine,Hong Kong
       - PORT_FORWARD_ONLY=on
     dns: 1.1.1.1
