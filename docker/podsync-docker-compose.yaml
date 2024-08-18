@@ -1,13 +1,14 @@
 version: "2.4"
 services:
   podsync:
-    image: mxpv/podsync:latest
+    image: ghcr.io/mxpv/podsync
     network_mode: bridge
     ports:
       - "9204:8080"
     volumes:
       - ${DOCKER_DIR:-./}/podsync/data:/app/data/
       - ${DOCKER_DIR:-./}/podsync/config.toml:/app/config.toml
+    dns: 1.1.1.1
     restart: unless-stopped
 #    networks:
 #      - proxy
