@@ -16,7 +16,7 @@ services:
       - traefik.http.routers.whoami.tls=true
       - traefik.http.routers.whoami.tls.certresolver=localresolver
   proxy:
-    image: traefik:v2.11        # Review traefik documentation https://doc.traefik.io/traefik/
+    image: traefik:v3.1        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
 #    network_mode: "host"
     mem_limit: 128m
