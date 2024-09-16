@@ -8,7 +8,7 @@ services:
     labels:
       - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
-      - traefik.http.services.n8n.loadbalancer.server.port=8000
+      - traefik.http.services.n8n.loadbalancer.server.port=5678
       - traefik.http.routers.n8n.rule=Host(`${DOMAIN_NAME}`)
       - traefik.http.routers.n8n.tls.certresolver=localresolver
       - traefik.http.routers.n8n.tls=true
