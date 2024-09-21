@@ -77,29 +77,6 @@ services:
       - traefik.http.routers.radarr.tls.certresolver=localresolver
       - traefik.http.routers.radarr.tls=true
       - traefik.docker.network=proxy
-  overseerr:
-    container_name: overseerr
-    image: sctx/overseerr:latest
-    networks:
-      - media
-      - proxy
-    volumes:
-      - ${DOCKER_DIR:-./}/overseerr/config:/app/config
-    depends_on:
-      - sonarr
-      - radarr
-    restart: unless-stopped
-    dns:
-      - 208.67.222.222
-      - 1.1.1.1
-      - 8.8.8.8
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.overseerr.loadbalancer.server.port=5055
-      - traefik.http.routers.overseerr.rule=Host(`video.local.psmarcin.dev`)
-      - traefik.http.routers.overseerr.tls.certresolver=localresolver
-      - traefik.http.routers.overseerr.tls=true
-      - traefik.docker.network=proxy
 
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
