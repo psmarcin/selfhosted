@@ -100,6 +100,32 @@ services:
       - traefik.http.routers.overseerr.tls=true
       - traefik.docker.network=proxy
 
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    networks:
+      - media
+      - proxy
+    environment:
+      - TZ=Europe/Warsaw
+      - PORT=5055 #optional
+    volumes:
+      - ${DOCKER_DIR:-./}/jellyseerr/config:/app/config
+    restart: unless-stopped
+    depends_on:
+      - sonarr
+      - radarr
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
+      - traefik.http.routers.jellyseerr.rule=Host(`v.local.psmarcin.dev`)
+      - traefik.http.routers.jellyseerr.tls.certresolver=localresolver
+      - traefik.http.routers.jellyseerr.tls=true
+      - traefik.docker.network=proxy
+
   bazarr:
     image: lscr.io/linuxserver/bazarr
     container_name: bazarr
