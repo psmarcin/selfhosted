@@ -90,6 +90,7 @@ services:
       - radarr
     restart: unless-stopped
     dns:
+      - 208.67.222.222
       - 1.1.1.1
       - 8.8.8.8
     labels:
@@ -116,6 +117,7 @@ services:
       - sonarr
       - radarr
     dns:
+      - 208.67.222.222
       - 1.1.1.1
       - 8.8.8.8
     labels:
