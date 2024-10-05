@@ -54,11 +54,13 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.services.portainer.loadbalancer.server.port=9000
+      - traefik.http.services.portainer.loadbalancer.servers.port=9000
+      - traefik.http.services.portainer.loadbalancer.servers.url=http://192.168.50.51:9000
+      - traefik.http.services.portainer.loadbalancer.server.url=http://192.168.50.51:9000
       - traefik.http.routers.portainer.rule=Host(`portainer.local.psmarcin.dev`)
       - traefik.http.routers.portainer.tls=true
   cloudflared:
-    image: cloudflare/cloudflared:2024.4.1
+    image: cloudflare/cloudflared:2024.9.1
     container_name: cloudflared
     network_mode: "host"
     volumes:
