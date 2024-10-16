@@ -25,8 +25,8 @@ services:
     image: ghcr.io/linuxserver/transmission:latest
     network_mode: service:vpn
     environment:
-      - PUID=1027
-      - PGID=100
+      - PUID=0
+      - PGID=0
       - TZ=Europe/Warsaw
       # - TRANSMISSION_WEB_HOME=/flood-for-transmission/
     volumes:
