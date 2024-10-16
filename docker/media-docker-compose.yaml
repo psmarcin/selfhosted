@@ -30,8 +30,8 @@ services:
     # mem_limit: 256m
     # mem_reservation: 50m
     environment:
-      - PUID=1027
-      - PGID=100
+      - PUID=0
+      - PGID=0
       - TZ=Europe/Warsaw
 #    ports:
 #      - "9094:8989"
@@ -58,8 +58,8 @@ services:
     # mem_limit: 256m
     # mem_reservation: 50m
     environment:
-      - PUID=1027
-      - PGID=100
+      - PUID=0
+      - PGID=0
       - TZ=Europe/Warsaw
 #    ports:
 #      - "9096:7878"
@@ -112,8 +112,8 @@ services:
       - media
       - proxy
     environment:
-      - PUID=1027
-      - PGID=100
+      - PUID=0
+      - PGID=0
       - TZ=Europe/Warsaw
     volumes:
       - ${DOCKER_DIR:-./}/bazarr/config:/config
