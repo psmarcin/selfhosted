@@ -10,6 +10,10 @@ services:
     # mem_reservation: 50m
 #    ports:
 #      - "9095:9117"
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Warsaw
     volumes:
       - ${DOCKER_DIR:-./}/jackett/config:/config
       - ${DOCKER_DIR:-./}/jackett/downloads:/downloads
