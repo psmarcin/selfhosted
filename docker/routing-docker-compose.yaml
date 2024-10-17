@@ -1,20 +1,20 @@
 version: "2.4"
 services:
 #  TO Debug traefik, add whoami service
-  whoami:
-    image: traefik/whoami
-    command:
-      # It tells whoami to start listening on 2001 instead of 80
-      - --port=2001
-      - --name=iamfoo
-    networks:
-      - proxy
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.whoami.loadbalancer.server.port=2001
-      - traefik.http.routers.whoami.rule=Host(`who.local.psmarcin.dev`)
-      - traefik.http.routers.whoami.tls=true
-      - traefik.http.routers.whoami.tls.certresolver=localresolver
+#  whoami:
+#    image: traefik/whoami
+#    command:
+#      # It tells whoami to start listening on 2001 instead of 80
+#      - --port=2001
+#      - --name=iamfoo
+#    networks:
+#      - proxy
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.services.whoami.loadbalancer.server.port=2001
+#      - traefik.http.routers.whoami.rule=Host(`who.local.psmarcin.dev`)
+#      - traefik.http.routers.whoami.tls=true
+#      - traefik.http.routers.whoami.tls.certresolver=localresolver
   proxy:
     image: traefik:v3.1        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
@@ -53,13 +53,13 @@ services:
       - CLOUDFLARE_DNS_API_TOKEN=${CF_TOKEN:-.}
       - CLOUDFLARE_ZONE_API_TOKEN=${CF_TOKEN:-.}
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
+#    labels:
+#      - traefik.enable=true
 #      - traefik.http.services.portainer.loadbalancer.servers.port=9000
 #      - traefik.http.services.portainer.loadbalancer.servers.url=http://192.168.50.51:9000
-      - traefik.http.services.portainer.loadbalancer.server.url=http://192.168.50.51:9000
-      - traefik.http.routers.portainer.rule=Host(`portainer.local.psmarcin.dev`)
-      - traefik.http.routers.portainer.tls=true
+#      - traefik.http.services.portainer.loadbalancer.server.url=http://192.168.50.51:9000
+#      - traefik.http.routers.portainer.rule=Host(`portainer.local.psmarcin.dev`)
+#      - traefik.http.routers.portainer.tls=true
   cloudflared:
     image: cloudflare/cloudflared:2024.9.1
     container_name: cloudflared
