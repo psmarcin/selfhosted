@@ -29,7 +29,6 @@ services:
       - PGID=0
       - TZ=Europe/Warsaw
       # - TRANSMISSION_WEB_HOME=/flood-for-transmission/
-    dns: 9.9.9.9
     volumes:
       - ${DOCKER_DIR:-./}/transmission:/config
       - ${DOCKER_DIR:-./}/downloads:/downloads
