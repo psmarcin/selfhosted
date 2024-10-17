@@ -6,10 +6,6 @@ services:
     networks:
       - media
       - proxy
-    # mem_limit: 256m
-    # mem_reservation: 50m
-#    ports:
-#      - "9095:9117"
     environment:
       - PUID=0
       - PGID=0
@@ -31,14 +27,10 @@ services:
     networks:
       - media
       - proxy
-    # mem_limit: 256m
-    # mem_reservation: 50m
     environment:
       - PUID=0
       - PGID=0
       - TZ=Europe/Warsaw
-#    ports:
-#      - "9094:8989"
     volumes:
       - ${DOCKER_DIR:-./}/sonarr/config:/config
       - ${DOCKER_DIR:-./}/downloads:/downloads
@@ -59,14 +51,10 @@ services:
     networks:
       - media
       - proxy
-    # mem_limit: 256m
-    # mem_reservation: 50m
     environment:
       - PUID=0
       - PGID=0
       - TZ=Europe/Warsaw
-#    ports:
-#      - "9096:7878"
     volumes:
       - ${DOCKER_DIR:-./}/radarr/config:/config
       - ${DOCKER_DIR:-./}/downloads:/downloads
