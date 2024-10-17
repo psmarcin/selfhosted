@@ -14,7 +14,7 @@ services:
       - OPENVPN_PASSWORD=${PASS:-}
       - SERVER_COUNTRIES=Ukraine,Hong Kong
       - PORT_FORWARD_ONLY=on
-    dns: 1.1.1.1
+    dns: 9.9.9.9
     labels:
       - traefik.enable=true
       - traefik.http.services.torrent.loadbalancer.server.port=9091
@@ -29,6 +29,7 @@ services:
       - PGID=0
       - TZ=Europe/Warsaw
       # - TRANSMISSION_WEB_HOME=/flood-for-transmission/
+    dns: 9.9.9.9
     volumes:
       - ${DOCKER_DIR:-./}/transmission:/config
       - ${DOCKER_DIR:-./}/downloads:/downloads
