@@ -70,57 +70,55 @@ services:
       - traefik.http.routers.radarr.tls=true
       - traefik.docker.network=proxy
 
-#  jellyseerr:
-#    image: fallenbagel/jellyseerr:latest
-#    container_name: jellyseerr
-#    networks:
-#      - media
-#      - proxy
-#    environment:
-#      - TZ=Europe/Warsaw
-#      - PORT=5055 #optional
-#    volumes:
-#      - ${DOCKER_DIR:-./}/jellyseerr/config:/app/config
-#    restart: unless-stopped
-#    depends_on:
-#      - sonarr
-#      - radarr
-#    dns:
-#      - 208.67.222.222
-#      - 1.1.1.1
-#      - 8.8.8.8
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
-#      - traefik.http.routers.jellyseerr.rule=Host(`v.local.psmarcin.dev`)
-#      - traefik.http.routers.jellyseerr.tls.certresolver=localresolver
-#      - traefik.http.routers.jellyseerr.tls=true
-#      - traefik.docker.network=proxy
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    networks:
+      - media
+      - proxy
+    environment:
+      - TZ=Europe/Warsaw
+      - PORT=5055 #optional
+    volumes:
+      - ${DOCKER_DIR:-./}/jellyseerr/config:/app/config
+    restart: unless-stopped
+    depends_on:
+      - sonarr
+      - radarr
+    dns:
+      - 208.67.222.222
+      - 1.1.1.1
+      - 8.8.8.8
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
+      - traefik.http.routers.jellyseerr.rule=Host(`v.local.psmarcin.dev`)
+      - traefik.http.routers.jellyseerr.tls.certresolver=localresolver
+      - traefik.http.routers.jellyseerr.tls=true
+      - traefik.docker.network=proxy
 
-#  bazarr:
-#    image: lscr.io/linuxserver/bazarr
-#    container_name: bazarr
-#    networks:
-#      - media
-#      - proxy
-#    environment:
-#      - PUID=0
-#      - PGID=0
-#      - TZ=Europe/Warsaw
-#    volumes:
-#      - ${DOCKER_DIR:-./}/bazarr/config:/config
-#      - ${DOCKER_DIR:-./}/downloads/movies:/movies
-#      - ${DOCKER_DIR:-./}/downloads/tv:/tv
-##    ports:
-##      - "9201:6767"
-#    restart: unless-stopped
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.services.bazarr.loadbalancer.server.port=6767
-#      - traefik.http.routers.bazarr.rule=Host(`subtitle.local.psmarcin.dev`)
-#      - traefik.http.routers.bazarr.tls.certresolver=localresolver
-#      - traefik.http.routers.bazarr.tls=true
-#      - traefik.docker.network=proxy
+  bazarr:
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr
+    networks:
+      - media
+      - proxy
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Warsaw
+    volumes:
+      - ${DOCKER_DIR:-./}/bazarr/config:/config
+      - ${DOCKER_DIR:-./}/downloads/movies:/movies
+      - ${DOCKER_DIR:-./}/downloads/tv:/tv
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.bazarr.loadbalancer.server.port=6767
+      - traefik.http.routers.bazarr.rule=Host(`subtitle.local.psmarcin.dev`)
+      - traefik.http.routers.bazarr.tls.certresolver=localresolver
+      - traefik.http.routers.bazarr.tls=true
+      - traefik.docker.network=proxy
 networks:
   media:
     name: media
