@@ -1,0 +1,17 @@
+services:
+  flaresolverr:
+    container_name: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    networks:
+      - media
+    ports:
+      - "8191:8191"
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Warsaw
+    restart: unless-stopped
+networks:
+  media:
+    name: media
+    external: true
