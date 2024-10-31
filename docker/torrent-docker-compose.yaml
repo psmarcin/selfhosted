@@ -2,8 +2,6 @@ version: "2.4"
 services:
   vpn:
     image: qmcgaw/gluetun:latest
-    networks:
-      - proxy
     cap_add:
       - NET_ADMIN
     devices:
@@ -16,12 +14,14 @@ services:
       - SERVER_COUNTRIES=Ukraine,Hong Kong
       - PORT_FORWARD_ONLY=on
     dns: 9.9.9.9
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.torrent.loadbalancer.server.port=9091
-      - traefik.http.routers.torrent.rule=Host(`torrent.local.psmarcin.dev`)
-      - traefik.http.routers.torrent.tls.certresolver=localresolver
-      - traefik.http.routers.torrent.tls=true
+    ports:
+      - "9091:9091"
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.services.torrent.loadbalancer.server.port=9091
+#      - traefik.http.routers.torrent.rule=Host(`torrent.local.psmarcin.dev`)
+#      - traefik.http.routers.torrent.tls.certresolver=localresolver
+#      - traefik.http.routers.torrent.tls=true
   torrent:
     image: ghcr.io/linuxserver/transmission:latest
     network_mode: service:vpn
@@ -35,10 +35,3 @@ services:
       - ${DOCKER_DIR:-./}/downloads:/downloads
       - ${DOCKER_DIR:-./}/transmission/watch:/watch
     restart: unless-stopped
-    mem_limit: 128m
-    mem_reservation: 50m
-
-networks:
-  proxy:
-    name: proxy
-    external: true
