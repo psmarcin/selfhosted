@@ -33,8 +33,8 @@ services:
       - TZ=Europe/Warsaw
     volumes:
       - ${DOCKER_DIR:-./}/sonarr/config:/config
-      - ${DOCKER_DIR:-./}/downloads:/downloads
-      - ${DOCKER_DIR:-./}/downloads/tv:/tv
+      - ${FILES_DIR:-./}/downloads:/downloads
+      - ${FILES_DIR:-./}/downloads/tv:/tv
     depends_on:
       - jackett
     restart: unless-stopped
@@ -57,8 +57,8 @@ services:
       - TZ=Europe/Warsaw
     volumes:
       - ${DOCKER_DIR:-./}/radarr/config:/config
-      - ${DOCKER_DIR:-./}/downloads:/downloads
-      - ${DOCKER_DIR:-./}/downloads/movies:/movies
+      - ${FILES_DIR:-./}/downloads:/downloads
+      - ${FILES_DIR:-./}/downloads/movies:/movies
     depends_on:
       - jackett
     restart: unless-stopped
@@ -109,8 +109,8 @@ services:
       - TZ=Europe/Warsaw
     volumes:
       - ${DOCKER_DIR:-./}/bazarr/config:/config
-      - ${DOCKER_DIR:-./}/downloads/movies:/movies
-      - ${DOCKER_DIR:-./}/downloads/tv:/tv
+      - ${FILES_DIR:-./}/downloads/movies:/movies
+      - ${FILES_DIR:-./}/downloads/tv:/tv
     restart: unless-stopped
     labels:
       - traefik.enable=true
@@ -122,7 +122,6 @@ services:
 networks:
   media:
     name: media
-    external: true
   proxy:
     name: proxy
     external: true
