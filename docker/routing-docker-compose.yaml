@@ -19,12 +19,9 @@ services:
     image: traefik:v3.1        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
 #    network_mode: "host"
-    mem_limit: 128m
-    mem_reservation: 64m
     networks:
       - proxy
     command:
-      - --log.level=DEBUG
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
@@ -53,13 +50,7 @@ services:
       - CLOUDFLARE_DNS_API_TOKEN=${CF_TOKEN:-.}
       - CLOUDFLARE_ZONE_API_TOKEN=${CF_TOKEN:-.}
     restart: unless-stopped
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.services.portainer.loadbalancer.servers.port=9000
-#      - traefik.http.services.portainer.loadbalancer.servers.url=http://192.168.50.51:9000
-#      - traefik.http.services.portainer.loadbalancer.server.url=http://192.168.50.51:9000
-#      - traefik.http.routers.portainer.rule=Host(`portainer.local.psmarcin.dev`)
-#      - traefik.http.routers.portainer.tls=true
+
   cloudflared:
     image: cloudflare/cloudflared:2024.9.1
     container_name: cloudflared

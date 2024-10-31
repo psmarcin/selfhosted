@@ -2,12 +2,9 @@ services:
   proxy:
     image: traefik:v3.1        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
-    mem_limit: 128m
-    mem_reservation: 64m
     networks:
       - proxy
     command:
-      - --log.level=DEBUG
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
@@ -20,7 +17,6 @@ services:
       - --api.disabledashboardad=true
       - --certificatesresolvers.localresolver.acme.dnsChallenge=true
       - --certificatesresolvers.localresolver.acme.dnsChallenge.provider=cloudflare
-#      - --certificatesresolvers.localresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.localresolver.acme.email=${ACME_EMAIL:-.}
       - --certificatesresolvers.localresolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.localresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
