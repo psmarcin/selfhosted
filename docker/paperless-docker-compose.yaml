@@ -7,17 +7,13 @@ services:
       - proxy
     container_name: paperless
     restart: unless-stopped
-    # mem_limit: 1g
-    # mem_reservation: 512m
-#    ports:
-#      - "9099:8000"
     volumes:
-      - pl_data:/usr/src/paperless/data
-      - pl_media:/usr/src/paperless/media
-      - ${ROOT_DIR:-.}/export:/usr/src/paperless/export
-      - ${ROOT_DIR:-.}/consume:/usr/src/paperless/consume
+      - ${DOCKER_DIR:-.}/paperless/data:/usr/src/paperless/data
+      - ${DOCKER_DIR:-.}/paperless/media:/usr/src/paperless/media
+      - ${FILES_DIR:-.}/export:/usr/src/paperless/export
+      - ${FILES_DIR:-.}/consume:/usr/src/paperless/consume
     labels:
-      - docker-volume-backup.stop-during-backup=true
+#      - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
       - traefik.http.services.paperless.loadbalancer.server.port=8000
       - traefik.http.routers.paperless.rule=Host(`paper.local.psmarcin.dev`)
@@ -38,14 +34,6 @@ services:
       PAPERLESS_CONSUMER_RECURSIVE: "true"
       PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
       PAPERLESS_URL: ${A_URL:-http://localhost:9099}
-
-volumes:
-  pl_data:
-    name: paperless_pl_data
-    external: true
-  pl_media:
-    name: paperless_pl_media
-    external: true
 
 networks:
   utilites:
