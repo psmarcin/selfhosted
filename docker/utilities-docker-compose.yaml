@@ -12,12 +12,10 @@ services:
 
   redis:
     container_name: redis
-    image: redis:6.0
+    image: redis:7.0
     networks:
       - utilites
     restart: unless-stopped
-    mem_limit: 50m
-    mem_reservation: 25m
 
   postgres:
     container_name: postgres
@@ -26,43 +24,60 @@ services:
       - utilites
     restart: unless-stopped
     volumes:
-      - utils_pgdata:/var/lib/postgresql/data
+      - ${DOCKER_DIR:-.}/postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    labels:
-      - docker-volume-backup.stop-during-backup=true
-    mem_limit: 256m
-    mem_reservation: 50m
+#    labels:
+#      - docker-volume-backup.stop-during-backup=true
 
-  backup:
-    image: offen/docker-volume-backup:v2
-    restart: always
-    environment:
-      BACKUP_FILENAME: backup-%Y-%m-%dT%H-%M-%S.{{ .Extension }}
-      BACKUP_PRUNING_PREFIX: backup-
-      BACKUP_RETENTION_DAYS: '7'
-      BACKUP_CRON_EXPRESSION: '0 11 * * *'
-    volumes:
-      - utils_pgdata:/backup/utils_pgdata:ro
-      - pl_data:/backup/pl_data:ro
-      - pl_media:/backup/pl_media:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${DOCKER_DIR:-./}/backup/archive:/archive
+#  backup:
+#    image: offen/docker-volume-backup:v2
+#    restart: always
+#    environment:
+#      BACKUP_FILENAME: backup-%Y-%m-%dT%H-%M-%S.{{ .Extension }}
+#      BACKUP_PRUNING_PREFIX: backup-
+#      BACKUP_RETENTION_DAYS: '7'
+#      BACKUP_CRON_EXPRESSION: '0 11 * * *'
+#    volumes:
+#      - utils_pgdata:/backup/utils_pgdata:ro
+#      - pl_data:/backup/pl_data:ro
+#      - pl_media:/backup/pl_media:ro
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+#      - ${DOCKER_DIR:-./}/backup/archive:/archive
 
-volumes:
-  utils_pgdata:
-    name: utils_pgdata
-    external: true
-  pl_data:
-    name: paperless_pl_data
-    external: true
-  pl_media:
-    name: paperless_pl_media
-    external: true
+#  mongo:
+#    image: mongo
+#    command: --quiet # suppress mongo logs a bit
+#    restart: unless-stopped
+#    logging:
+#      driver: local
+#    networks:
+#      - utilites
+#    ports:
+#      - 27017:27017
+#    volumes:
+#      - mongo_data:/data/db
+#      - mongo_config:/data/configdb
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: admin
+#      MONGO_INITDB_ROOT_PASSWORD: admin
+
+
+#volumes:
+#  utils_pgdata:
+#    name: utils_pgdata
+#    external: true
+#  pl_data:
+#    name: paperless_pl_data
+#    external: true
+#  pl_media:
+#    name: paperless_pl_media
+#    external: true
+#  mongo_data:
+#  mongo_config:
 
 networks:
   utilites:
     name: utilites
-    external: true
