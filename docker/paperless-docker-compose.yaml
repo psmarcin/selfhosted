@@ -11,7 +11,7 @@ services:
       - ${DOCKER_DIR:-.}/paperless/data:/usr/src/paperless/data
       - ${DOCKER_DIR:-.}/paperless/media:/usr/src/paperless/media
       - ${FILES_DIR:-.}/paperless/export:/usr/src/paperless/export
-      - ${FILES_DIR:-.}/paperless/consume1:/usr/src/paperless/consume
+      - ${FILES_DIR:-.}/paperless/consume3:/usr/src/paperless/consume
     labels:
 #      - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
