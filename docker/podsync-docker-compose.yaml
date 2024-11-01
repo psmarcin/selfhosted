@@ -6,8 +6,7 @@ services:
     ports:
       - "9204:8080"
     volumes:
-      - podsync_data:/app/data/
-      - podsync_config_toml:/app/config.toml
+      - podsync_data:/app
     dns: 1.1.1.1
     restart: unless-stopped
 
@@ -16,9 +15,4 @@ volumes:
     driver_opts:
       type: cifs
       o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=1.0,rw
-      device: //${SMB_URI:-.}/data
-  podsync_config_toml:
-    driver_opts:
-      type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=1.0,rw
-      device: //${SMB_URI:-.}/config.toml
+      device: //${SMB_URI:-.}
