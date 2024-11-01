@@ -12,7 +12,7 @@ services:
       - ${DOCKER_DIR:-.}/paperless/data:/usr/src/paperless/data
       - ${DOCKER_DIR:-.}/paperless/media:/usr/src/paperless/media
       - ${FILES_DIR:-.}/paperless/export:/usr/src/paperless/export
-      - ${CONSUME_DIR:-.}/:/usr/src/paperless/consume
+      - consume:/usr/src/paperless/consume
     labels:
       #      - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
@@ -35,6 +35,14 @@ services:
       PAPERLESS_CONSUMER_RECURSIVE: "true"
       PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
       PAPERLESS_URL: ${A_URL:-http://localhost:9099}
+
+volumes:
+  consume:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=1.0,rw
+      device: //${SMB_URI:-.}
+
 
 networks:
   utilites:
