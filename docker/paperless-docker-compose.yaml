@@ -35,6 +35,9 @@ services:
       PAPERLESS_CONSUMER_RECURSIVE: "true"
       PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
       PAPERLESS_URL: ${A_URL:-http://localhost:9099}
+      PAPERLESS_TASK_WORKERS: 2
+      PAPERLESS_CONSUMER_POLLING: 0 # choose this or inotify
+      PAPERLESS_CONSUMER_INOTIFY_DELAY: 5
 
 volumes:
   consume:
