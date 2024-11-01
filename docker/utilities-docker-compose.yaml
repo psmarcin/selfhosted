@@ -12,7 +12,7 @@ services:
 
   redis:
     container_name: redis
-    user: "${UID:-1000}:${GID:-1000}"
+    #user: "${UID:-1000}:${GID:-1000}"
     image: redis:7.0
     networks:
       - utilites
