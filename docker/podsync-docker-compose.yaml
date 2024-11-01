@@ -1,12 +1,14 @@
-version: "2.4"
 services:
   podsync:
     image: ghcr.io/mxpv/podsync
     network_mode: bridge
     ports:
       - "9204:8080"
+    environment:
+      PODSYNC_CONFIG_PATH: /config/config.toml
     volumes:
       - podsync_data:/app
+      - podsync_config_toml:/config
     dns: 1.1.1.1
     restart: unless-stopped
 
@@ -15,4 +17,9 @@ volumes:
     driver_opts:
       type: cifs
       o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=1.0,rw
-      device: //${SMB_URI:-.}
+      device: //${SMB_URI:-.}/data
+  podsync_config:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=1.0,rw
+      device: //${SMB_URI:-.}/config
