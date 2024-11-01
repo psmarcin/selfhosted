@@ -8,7 +8,7 @@ services:
       PODSYNC_CONFIG_PATH: /config/config.toml
     volumes:
       - podsync_data:/app
-      - podsync_config_toml:/config
+      - podsync_config:/config
     dns: 1.1.1.1
     restart: unless-stopped
 
