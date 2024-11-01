@@ -40,7 +40,7 @@ volumes:
   consume:
     driver_opts:
       type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=1.0,rw,file_mode=755,dir_mode=755
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
       device: //${SMB_URI:-.}
 
 
