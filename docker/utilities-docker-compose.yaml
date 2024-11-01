@@ -2,7 +2,6 @@ version: "2.4"
 services:
   watchtower:
     container_name: watchtower
-    user: "${UID:-1000}:${GID:-1000}"
     image: containrrr/watchtower
     environment:
       WATCHTOWER_POLL_INTERVAL: 604800
