@@ -2,11 +2,10 @@ version: "2.4"
 services:
   n8n:
     image: docker.n8n.io/n8nio/n8n
-    restart: always
+    restart: unless-stopped
     networks:
       - proxy
     labels:
-      - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
       - traefik.http.services.n8n.loadbalancer.server.port=5678
       - traefik.http.routers.n8n.rule=Host(`${DOMAIN_NAME}`)
@@ -31,10 +30,7 @@ services:
       - N8N_DIAGNOSTICS_ENABLED=false
       - N8N_VERSION_NOTIFICATIONS_ENABLED=false
     volumes:
-      - n8n_data:/home/node/.n8n
-
-volumes:
-  n8n_data: {}
+      - ${DOCKER_DIR:-.}/n8n:/home/node/.n8n
 
 networks:
   proxy:
