@@ -2,7 +2,7 @@ version: "2.4"
 services:
   paperless:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
-    user: "${UID:-1000}:${GID:-1000}"
+    # user: "${UID:-1000}:${GID:-1000}"
     networks:
       - utilites
       - proxy
