@@ -51,15 +51,6 @@ services:
       - CLOUDFLARE_ZONE_API_TOKEN=${CF_TOKEN:-.}
     restart: unless-stopped
 
-  cloudflared:
-    image: cloudflare/cloudflared:2024.9.1
-    container_name: cloudflared
-    network_mode: "host"
-    volumes:
-      - ${DOCKER_DIR:-.}/cloudflared/config:/etc/cloudflared
-    command: tunnel run
-    restart: always
-
   uptime:
     container_name: uptime
     image: louislam/uptime-kuma:1-alpine

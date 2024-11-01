@@ -1,0 +1,9 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:2024.10.1
+    container_name: cloudflared
+    network_mode: "host"
+    volumes:
+      - ${DOCKER_DIR:-.}/cloudflared/config:/etc/cloudflared
+    command: tunnel run
+    restart: always
