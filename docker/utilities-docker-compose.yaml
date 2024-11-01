@@ -2,6 +2,7 @@ version: "2.4"
 services:
   watchtower:
     container_name: watchtower
+    user: "${UID:-1000}:${GID:-1000}"
     image: containrrr/watchtower
     environment:
       WATCHTOWER_POLL_INTERVAL: 604800
@@ -12,6 +13,7 @@ services:
 
   redis:
     container_name: redis
+    user: "${UID:-1000}:${GID:-1000}"
     image: redis:7.0
     networks:
       - utilites
@@ -19,6 +21,7 @@ services:
 
   postgres:
     container_name: postgres
+    user: "${UID:-1000}:${GID:-1000}"
     image: postgres:14
     networks:
       - utilites
