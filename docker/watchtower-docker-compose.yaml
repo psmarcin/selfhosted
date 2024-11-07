@@ -1,0 +1,10 @@
+services:
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    environment:
+      WATCHTOWER_POLL_INTERVAL: 604800
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_RUN_ONCE: ${WATCHTOWER_RUN_ONCE:-false}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
