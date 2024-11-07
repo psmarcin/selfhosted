@@ -16,12 +16,6 @@ services:
     dns: 9.9.9.9
     ports:
       - "9091:9091"
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.services.torrent.loadbalancer.server.port=9091
-#      - traefik.http.routers.torrent.rule=Host(`torrent.local.psmarcin.dev`)
-#      - traefik.http.routers.torrent.tls.certresolver=localresolver
-#      - traefik.http.routers.torrent.tls=true
   torrent:
     image: ghcr.io/linuxserver/transmission:latest
     network_mode: service:vpn
@@ -29,9 +23,26 @@ services:
       - PUID=0
       - PGID=0
       - TZ=Europe/Warsaw
-      # - TRANSMISSION_WEB_HOME=/flood-for-transmission/
     volumes:
-      - ${DOCKER_DIR:-./}/transmission:/config
-      - ${DOCKER_DIR:-./}/downloads:/downloads
-      - ${DOCKER_DIR:-./}/transmission/watch:/watch
+      - torrent_transmission:/config
+      - torrent_data:/downloads
+      - torrent_transmission_watch:/watch
     restart: unless-stopped
+
+
+volumes:
+  torrent_data:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/downloads
+  torrent_transmission:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/transmission
+  torrent_transmission_watch:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/transmission/watch
