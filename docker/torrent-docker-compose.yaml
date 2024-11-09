@@ -15,6 +15,7 @@ services:
     dns: 9.9.9.9
     ports:
       - "9091:9091"
+      - "8080:8080"
   torrent:
     image: ghcr.io/linuxserver/transmission:latest
     network_mode: service:vpn
@@ -34,8 +35,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Warsaw
-    ports:
-      - "8080:8080"
     volumes:
       - torrent_qbittorrent:/config
       - torrent_data:/downloads
