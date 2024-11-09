@@ -1,4 +1,3 @@
-version: "2.4"
 services:
   vpn:
     image: qmcgaw/gluetun:latest
@@ -28,6 +27,19 @@ services:
       - torrent_data:/downloads
       - torrent_transmission_watch:/watch
     restart: unless-stopped
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    network_mode: service:vpn
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    ports:
+      - "8080:8080"
+    volumes:
+      - torrent_qbittorrent:/config
+      - torrent_data:/downloads
+    restart: unless-stopped
 
 
 volumes:
@@ -41,6 +53,11 @@ volumes:
       type: cifs
       o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
       device: //${SMB_URI:-.}/transmission
+  torrent_qbittorrent:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/qbittorrent
   torrent_transmission_watch:
     driver_opts:
       type: cifs
