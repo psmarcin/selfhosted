@@ -5,8 +5,8 @@ services:
     restart: 'unless-stopped'
     networks:
       - proxy
-    expose:
-      - 9391
+    ports:
+      - "9391:9091"
     environment:
       AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: '/secrets/JWT_SECRET'
       AUTHELIA_SESSION_SECRET_FILE: '/secrets/SESSION_SECRET'
