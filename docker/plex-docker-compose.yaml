@@ -1,9 +1,8 @@
-version: "2.4"
 services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    network_mode: host
+#    network_mode: host
     environment:
       - PUID=1027
       - PGID=100
@@ -14,11 +13,25 @@ services:
     devices:
       - /dev/dri:/dev/dri
     volumes:
-      - /volume1/docker/plex:/config
-      - /volume1/docker/downloads:/volume1/docker/downloads
+#      - /volume1/docker/plex:/config
+      - plex_config:/config
+#      - /volume1/docker/downloads:/volume1/docker/downloads
+      - plex_downloads:/volume1/docker/downloads
 #      - /volume1/docker/transmission-openvpn/completed:/volume1/docker/transmission-openvpn/completed
     labels:
       - traefik.enable=true
       - traefik.http.services.plex.loadbalancer.server.port=32400
       - traefik.http.routers.plex.rule=Host(`${PLEX_DOMAIN:-}`)
     restart: unless-stopped
+
+volumes:
+  plex_config:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/plex
+  plex_downloads:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/downloads
