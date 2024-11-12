@@ -2,7 +2,6 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-#    network_mode: host
     environment:
       - PUID=1000
       - PGID=1000
@@ -13,16 +12,14 @@ services:
     devices:
       - /dev/dri:/dev/dri
     volumes:
-#      - /volume1/docker/plex:/config
       - plex_config:/config
-#      - /volume1/docker/downloads:/volume1/docker/downloads
       - plex_downloads_audiobooks:/volume1/docker/downloads/audiobooks
       - plex_downloads_audiobooks_complete:/volume1/docker/downloads/complete/audiobooks
       - plex_downloads_movies:/volume1/docker/downloads/movies
       - plex_downloads_movies_complete:/volume1/docker/downloads/complete/movies
       - plex_downloads_tv:/volume1/docker/downloads/tv
       - plex_downloads_tv_complete:/volume1/docker/downloads/complete/tv
-#      - /volume1/docker/transmission-openvpn/completed:/volume1/docker/transmission-openvpn/completed
+      - ${DOCKER_DIR:-.}/plex/transcode:/transcode
     labels:
       - traefik.enable=true
       - traefik.http.services.plex.loadbalancer.server.port=32400
