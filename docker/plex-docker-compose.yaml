@@ -4,8 +4,8 @@ services:
     container_name: plex
 #    network_mode: host
     environment:
-      - PUID=1027
-      - PGID=100
+      - PUID=1000
+      - PGID=1000
       - VERSION=${PLEX_VERSION:-docker}
       - 'PLEX_CLAIM=${PLEX_CLAIM}'
     ports:
@@ -16,7 +16,12 @@ services:
 #      - /volume1/docker/plex:/config
       - plex_config:/config
 #      - /volume1/docker/downloads:/volume1/docker/downloads
-      - plex_downloads:/volume1/docker/downloads
+      - plex_downloads_audiobooks:/volume1/docker/downloads/audiobooks
+      - plex_downloads_audiobooks_complete:/volume1/docker/downloads/complete/audiobooks
+      - plex_downloads_movies:/volume1/docker/downloads/movies
+      - plex_downloads_movies_complete:/volume1/docker/downloads/complete/movies
+      - plex_downloads_tv:/volume1/docker/downloads/tv
+      - plex_downloads_tv_complete:/volume1/docker/downloads/complete/tv
 #      - /volume1/docker/transmission-openvpn/completed:/volume1/docker/transmission-openvpn/completed
     labels:
       - traefik.enable=true
@@ -30,8 +35,33 @@ volumes:
       type: cifs
       o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
       device: //${SMB_URI:-.}/plex
-  plex_downloads:
+  plex_downloads_audiobooks:
     driver_opts:
       type: cifs
       o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
-      device: //${SMB_URI:-.}/downloads
+      device: //${SMB_URI:-.}/downloads/audiobooks
+  plex_downloads_movies:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/downloads/movies
+  plex_downloads_tv:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/downloads/tv
+  plex_downloads_audiobooks_complete:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/downloads/complete/audiobooks
+  plex_downloads_movies_complete:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/downloads/complete/movies
+  plex_downloads_tv_complete:
+    driver_opts:
+      type: cifs
+      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
+      device: //${SMB_URI:-.}/downloads/complete/tv
