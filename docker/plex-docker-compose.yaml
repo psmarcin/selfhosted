@@ -1,6 +1,6 @@
 services:
   plex:
-    image: lscr.io/linuxserver/plex:1.40.0.7998-c29d4c0c8
+    image: lscr.io/linuxserver/plex:latest
     container_name: plex
     environment:
       - PUID=1000
