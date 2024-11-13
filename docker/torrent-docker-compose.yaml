@@ -16,18 +16,6 @@ services:
     ports:
       - "9091:9091"
       - "8080:8080"
-  torrent:
-    image: ghcr.io/linuxserver/transmission:latest
-    network_mode: service:vpn
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=Europe/Warsaw
-    volumes:
-      - torrent_transmission:/config
-      - torrent_data:/downloads
-      - torrent_transmission_watch:/watch
-    restart: unless-stopped
   qbittorrent:
     image: linuxserver/qbittorrent:latest
     network_mode: service:vpn
@@ -47,18 +35,8 @@ volumes:
       type: cifs
       o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
       device: //${SMB_URI:-.}/downloads
-  torrent_transmission:
-    driver_opts:
-      type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
-      device: //${SMB_URI:-.}/transmission
   torrent_qbittorrent:
     driver_opts:
       type: cifs
       o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
       device: //${SMB_URI:-.}/qbittorrent
-  torrent_transmission_watch:
-    driver_opts:
-      type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
-      device: //${SMB_URI:-.}/transmission/watch
