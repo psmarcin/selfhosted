@@ -12,13 +12,10 @@ services:
     devices:
       - /dev/dri:/dev/dri
     volumes:
-      - plex_config:/config
+      - ${DOCKER_DIR:-.}/plex/config:/config
       - plex_downloads_audiobooks:/volume1/docker/downloads/audiobooks
-      - plex_downloads_audiobooks_complete:/volume1/docker/downloads/complete/audiobooks
       - plex_downloads_movies:/volume1/docker/downloads/movies
-      - plex_downloads_movies_complete:/volume1/docker/downloads/complete/movies
       - plex_downloads_tv:/volume1/docker/downloads/tv
-      - plex_downloads_tv_complete:/volume1/docker/downloads/complete/tv
       - ${DOCKER_DIR:-.}/plex/transcode:/transcode
     labels:
       - traefik.enable=true
@@ -47,18 +44,3 @@ volumes:
       type: cifs
       o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
       device: //${SMB_URI:-.}/downloads/tv
-  plex_downloads_audiobooks_complete:
-    driver_opts:
-      type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
-      device: //${SMB_URI:-.}/downloads/complete/audiobooks
-  plex_downloads_movies_complete:
-    driver_opts:
-      type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
-      device: //${SMB_URI:-.}/downloads/complete/movies
-  plex_downloads_tv_complete:
-    driver_opts:
-      type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
-      device: //${SMB_URI:-.}/downloads/complete/tv
