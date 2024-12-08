@@ -9,5 +9,5 @@ services:
       PODSYNC_CONFIG_PATH: /config/config.toml
     volumes:
       - /opt/podsync/data:/app/data
-      - /opt/podsync/data:/config
+      - /opt/podsync/config:/config
     restart: unless-stopped
