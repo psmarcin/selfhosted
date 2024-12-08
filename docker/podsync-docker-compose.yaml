@@ -4,6 +4,7 @@ services:
     network_mode: bridge
     ports:
       - "9204:8080"
+    user: 1000:1000
     environment:
       PODSYNC_CONFIG_PATH: /config/config.toml
     volumes:
