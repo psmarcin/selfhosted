@@ -20,3 +20,17 @@ services:
       AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/STORAGE_ENCRYPTION_KEY'
     volumes:
       - '/opt/authelia/config:/config'
+
+  secure:
+    image: 'traefik/whoami'
+    container_name: 'secure'
+    ports:
+      - "9002:9002"
+    restart: 'unless-stopped'
+
+  public:
+    image: 'traefik/whoami'
+    container_name: 'public'
+    ports:
+      - "9001:9001"
+    restart: 'unless-stopped'
