@@ -1,0 +1,20 @@
+---
+secrets:
+  JWT_SECRET:
+    file: '/opt/authelia/secrets/JWT_SECRET'
+  SESSION_SECRET:
+    file: '/opt/authelia/secrets/SESSION_SECRET'
+  STORAGE_ENCRYPTION_KEY:
+    file: '/opt/authelia/secrets/STORAGE_ENCRYPTION_KEY'
+services:
+  authelia:
+    container_name: 'authelia'
+    image: 'docker.io/authelia/authelia:latest'
+    restart: 'unless-stopped'
+    secrets: ['JWT_SECRET', 'SESSION_SECRET', 'STORAGE_ENCRYPTION_KEY']
+    environment:
+      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: '/run/secrets/JWT_SECRET'
+      AUTHELIA_SESSION_SECRET_FILE: '/run/secrets/SESSION_SECRET'
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/STORAGE_ENCRYPTION_KEY'
+    volumes:
+      - '/opt/authelia/config:/config'
