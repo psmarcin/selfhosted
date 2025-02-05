@@ -20,6 +20,8 @@ services:
       AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/STORAGE_ENCRYPTION_KEY'
     volumes:
       - '/opt/authelia/config:/config'
+    dns:
+      - 1.1.1.1
 
   secure:
     image: 'traefik/whoami'
