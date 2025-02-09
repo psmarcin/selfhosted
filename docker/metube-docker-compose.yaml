@@ -7,3 +7,4 @@ services:
       - "8081:8081"
     volumes:
       - /opt/metube/youtube:/downloads
+    network_mode: bridge
