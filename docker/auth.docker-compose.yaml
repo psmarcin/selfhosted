@@ -22,21 +22,4 @@ services:
       - '/opt/authelia/config:/config'
     dns:
       - 1.1.1.1
-
-  secure:
-    image: 'traefik/whoami'
-    container_name: 'secure'
-    ports:
-      - "9102:9102"
-    restart: 'unless-stopped'
-    command:
-      - --port=9102
-
-  public:
-    image: 'traefik/whoami'
-    container_name: 'public'
-    ports:
-      - "9101:9101"
-    restart: 'unless-stopped'
-    command:
-      - --port=9101
+    network_mode: bridge
