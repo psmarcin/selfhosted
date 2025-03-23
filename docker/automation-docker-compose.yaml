@@ -14,6 +14,7 @@ services:
       - NODE_ENV=production
       #      - WEBHOOK_URL=${PUBLIC_DOMAIN_NAME}
       - GENERIC_TIMEZONE="Europe/Warsaw"
+      - TZ="Europe/Warsaw"
       - N8N_DIAGNOSTICS_ENABLED=false
       - N8N_VERSION_NOTIFICATIONS_ENABLED=true
       - N8N_RUNNERS_ENABLED=true
