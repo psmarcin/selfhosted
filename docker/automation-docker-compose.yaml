@@ -2,7 +2,6 @@ version: "2.4"
 services:
   n8n:
     image: docker.n8n.io/n8nio/n8n
-    user: "${UID:-1000}:${GID:-1000}"
     restart: unless-stopped
     ports:
       - "8083:5678"
