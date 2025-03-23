@@ -6,6 +6,8 @@ services:
     ports:
       - "8083:5678"
     environment:
+      # TODO: make the connection secure through traefik
+      - N8N_SECURE_COOKIE=false
       #      - N8N_HOST=${DOMAIN_NAME}
       - N8N_PORT=5678
       #      - N8N_PROTOCOL=https
