@@ -8,6 +8,8 @@ services:
       - /opt/filebrowser/database/:/database/
       - /opt/filebrowser/config/:/config/
 #    user: "${UID:-1000}:${GID:-1000}"
+    ports:
+      - "8084:80"
     labels:
       - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
