@@ -1,12 +1,12 @@
 version: "2.4"
 services:
   filebrowser:
-    image: filebrowser/filebrowser
+    image: filebrowser/filebrowser:s6
     restart: unless-stopped
     volumes:
       - ${DOCKER_DIR:-./}:/srv
-      - /opt/filebrowser/:/database.db
-      - /opt/filebrowser/:/.filebrowser.json
+      - /opt/filebrowser/database/:/database/
+      - /opt/filebrowser/config/:/config/
 #    user: "${UID:-1000}:${GID:-1000}"
     labels:
       - docker-volume-backup.stop-during-backup=true
