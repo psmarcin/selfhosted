@@ -5,13 +5,13 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKER_DIR:-./}:/srv
-      - /opt/filebrowser/filebrowser.db:/database.db
+      - /opt/filebrowser/database.db:/database.db
       - /opt/filebrowser/.filebrowser.json:/.filebrowser.json
-    user: "${UID:-1000}:${GID:-1000}"
+#    user: "${UID:-1000}:${GID:-1000}"
     labels:
       - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
-      - traefik.http.services.filebrowser.loadbalancer.server.port=8000
+      - traefik.http.services.filebrowser.loadbalancer.server.port=80
       - traefik.http.routers.filebrowser.rule=Host(`files.local.psmarcin.dev`)
       - traefik.http.routers.filebrowser.tls.certresolver=localresolver
       - traefik.http.routers.filebrowser.tls=true
