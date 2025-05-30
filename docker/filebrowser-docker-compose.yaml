@@ -5,8 +5,8 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKER_DIR:-./}:/srv
-      - ${DOCKER_DIR:-./}filebrowser/filebrowser.db:/database.db
-      - ${DOCKER_DIR:-./}filebrowser/.filebrowser.json:/.filebrowser.json
+      - /opt/filebrowser/filebrowser.db:/database.db
+      - /opt/filebrowser/.filebrowser.json:/.filebrowser.json
     user: "${UID:-1000}:${GID:-1000}"
     labels:
       - docker-volume-backup.stop-during-backup=true
