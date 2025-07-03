@@ -10,6 +10,12 @@ services:
     environment:
       - INIT_ASSETS=0
     restart: unless-stopped
+    labels:
+      - traefik.http.services.homer.loadbalancer.server.port=8080
+      - traefik.http.routers.homer.rule=Host(`${HOST:-.}`)
+      - traefik.http.routers.homer.tls.certresolver=localresolver
+      - traefik.http.routers.homer.tls=true
+      - traefik.docker.network=proxy
     logging:
       driver: "json-file"
       options:
