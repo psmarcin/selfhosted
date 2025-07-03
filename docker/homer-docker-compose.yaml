@@ -7,6 +7,8 @@ services:
     ports:
       - "${HOMER_PORT:-9001}:8080"
     user: "${UID:-1000}:${GID:-1000}"
+    networks:
+      - proxy
     environment:
       - INIT_ASSETS=0
     restart: unless-stopped
@@ -21,3 +23,7 @@ services:
       options:
         max-size: "30m"
         max-file: "3"
+networks:
+  proxy:
+    name: proxy
+    external: true
