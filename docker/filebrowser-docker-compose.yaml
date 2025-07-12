@@ -7,11 +7,8 @@ services:
       - ${DOCKER_DIR:-./}:/srv
       - filebrowser-database:/database/
       - filebrowser-config:/config/
-    user: "${UID:-1000}:${GID:-1000}"
     networks:
       - proxy
-    ports:
-      - "8084:80"
     labels:
       - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
@@ -24,6 +21,8 @@ services:
       - DNS1=1.1.1.1
       - DNS2=1.0.0.1
       - DNSMASQ_LISTENING=all
+      - PUID=${USER:-1000}
+      - PGID=${GROUP:-1000}
 
 volumes:
   filebrowser-database:
