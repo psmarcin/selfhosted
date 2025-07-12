@@ -4,7 +4,23 @@ services:
     container_name: metube
     restart: unless-stopped
     ports:
-      - "8081:8081"
+      - "8085:8081"
     volumes:
-      - /opt/metube/youtube:/downloads
-    network_mode: bridge
+      - ${DOCKER_DIR:-./}media/youtube:/downloads
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    labels:
+      - docker-volume-backup.stop-during-backup=true
+      - traefik.enable=true
+      - traefik.http.services.filebrowser.loadbalancer.server.port=8081
+      - traefik.http.routers.filebrowser.rule=Host(`${HOST}`)
+      - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
+      - traefik.http.routers.filebrowser.tls=true
+      - traefik.docker.network=proxy
+    environment:
+      - UID=${USER:-1000}
+      - GID=${GROUP:-1000}
+networks:
+  proxy:
+    external: true
