@@ -1,0 +1,30 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v3.0.1 #
+    restart: always
+    labels:
+      - docker-volume-backup.stop-during-backup=true
+      - traefik.enable=true
+      - traefik.http.services.maelie.loadbalancer.server.port=9000
+      - traefik.http.routers.maelie.rule=Host(`${HOST}`)
+      - traefik.http.routers.maelie.tls.certresolver=${CERT_RESOLVER}
+      - traefik.http.routers.maelie.tls=true
+      - traefik.docker.network=proxy
+    networks:
+      - proxy
+    volumes:
+      - mealie-data:/app/data/
+    environment:
+      # Set Backend ENV Variables Here
+      ALLOW_SIGNUP: "false"
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Warsaw
+      BASE_URL: https://${HOST}
+
+volumes:
+  mealie-data:
+
+networks:
+  proxy:
+    external: true
