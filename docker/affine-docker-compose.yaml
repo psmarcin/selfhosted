@@ -12,6 +12,7 @@ services:
         condition: service_completed_successfully
     networks:
       - proxy
+      - affine
     labels:
       - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
@@ -34,6 +35,8 @@ services:
   affine_migration:
     image: ghcr.io/toeverything/affine:${AFFINE_REVISION:-stable}
     container_name: affine_migration_job
+    networks:
+      - affine
     volumes:
       - ${DOCKER_DIR}/affine/storage:/root/.affine/storage
       - affine_data:/root/.affine/config
@@ -51,6 +54,8 @@ services:
   redis:
     image: redis
     container_name: affine_redis
+    networks:
+      - affine
     healthcheck:
       test: [ 'CMD', 'redis-cli', '--raw', 'incr', 'ping' ]
       interval: 10s
@@ -61,6 +66,8 @@ services:
   postgres:
     image: pgvector/pgvector:pg16
     container_name: affine_postgres
+    networks:
+      - affine
     volumes:
       - affine_postgres_data:/var/lib/postgresql/data
     environment:
@@ -86,3 +93,4 @@ volumes:
 networks:
   proxy:
     external: true
+  affine:
