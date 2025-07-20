@@ -1,27 +1,28 @@
-version: "2.4"
+version: "3.8"
 services:
-#  TO Debug traefik, add whoami service
-#  whoami:
-#    image: traefik/whoami
-#    command:
-#      # It tells whoami to start listening on 2001 instead of 80
-#      - --port=2001
-#      - --name=iamfoo
-#    networks:
-#      - proxy
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.services.whoami.loadbalancer.server.port=2001
-#      - traefik.http.routers.whoami.rule=Host(`who.local.psmarcin.dev`)
-#      - traefik.http.routers.whoami.tls=true
-#      - traefik.http.routers.whoami.tls.certresolver=localresolver
+  #  TO Debug traefik, add whoami service
+  whoami:
+    image: traefik/whoami
+    command:
+      # It tells whoami to start listening on 2001 instead of 80
+      - --port=2001
+      - --name=iamfoo
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.whoami.loadbalancer.server.port=2001
+      - traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST:-.}`)
+      - traefik.http.routers.whoami.tls=true
+      - traefik.http.routers.whoami.tls.certresolver=localresolver
   proxy:
-    image: traefik:v3.1        # Review traefik documentation https://doc.traefik.io/traefik/
+    image: traefik:v3        # Review traefik documentation https://doc.traefik.io/traefik/
     container_name: traefik
-#    network_mode: "host"
+    #    network_mode: "host"
     networks:
       - proxy
     command:
+      - --log.level=INFO
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
@@ -34,58 +35,28 @@ services:
       - --api.disabledashboardad=true
       - --certificatesresolvers.localresolver.acme.dnsChallenge=true
       - --certificatesresolvers.localresolver.acme.dnsChallenge.provider=cloudflare
-#      - --certificatesresolvers.localresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      #      - --certificatesresolvers.localresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.localresolver.acme.email=${ACME_EMAIL:-.}
       - --certificatesresolvers.localresolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.localresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
+      - --providers.file.directory=/dynamic
     ports:
       - "9091:9091"
-      - "9443:9443"
+      - "8443:9443"
       - "443:9443"
       - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${DOCKER_DIR:-.}/traefik/letsencrypt:/letsencrypt
+      - certs:/letsencrypt
+      - ${DOCKER_DIR:-.}/traefik/dynamic:/dynamic:ro
     environment:
       - CLOUDFLARE_DNS_API_TOKEN=${CF_TOKEN:-.}
       - CLOUDFLARE_ZONE_API_TOKEN=${CF_TOKEN:-.}
     restart: unless-stopped
 
-  uptime:
-    container_name: uptime
-    image: louislam/uptime-kuma:1-alpine
-    networks:
-      - proxy
-    mem_limit: 256m
-    mem_reservation: 128m
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.uptime.loadbalancer.server.port=3001
-      - traefik.http.routers.uptime.rule=Host(`up.local.psmarcin.dev`)
-      - traefik.http.routers.uptime.tls.certresolver=localresolver
-      - traefik.http.routers.uptime.tls=true
-    volumes:
-      - ${DOCKER_DIR:-.}/uptime/data:/app/data
-
-  homer:
-    image: b4bz/homer:latest
-    container_name: homer
-    restart: unless-stopped
-    networks:
-      - proxy
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.homer.loadbalancer.server.port=8080
-      - traefik.http.routers.homer.rule=Host(`local.psmarcin.dev`)
-      - traefik.http.routers.homer.tls.certresolver=localresolver
-      - traefik.http.routers.homer.tls=true
-    environment:
-      - PUID=1027
-      - PGID=100
-      - TZ=Europe/Warsaw
-    volumes:
-      - ${DOCKER_DIR:-.}/homer/assets:/www/assets
-
 networks:
   proxy:
     name: proxy
+
+volumes:
+  certs:
