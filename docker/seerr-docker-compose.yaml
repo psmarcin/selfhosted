@@ -1,0 +1,29 @@
+services:
+  seerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=Europe/Warsaw
+      - PORT=5055 #optional
+    ports:
+      - 5055:5055
+    volumes:
+      - ${DOCKER_DIR:-./}/seerr/config:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+    restart: unless-stopped
+    dns:
+      - 208.67.222.222
+      - 1.1.1.1
+      - 8.8.8.8
+
+
+networks:
+  proxy:
+    name: proxy
+    external: true
