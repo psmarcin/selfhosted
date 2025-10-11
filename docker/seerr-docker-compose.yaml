@@ -1,7 +1,7 @@
 services:
   seerr:
     image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+    container_name: seerr
     environment:
       - LOG_LEVEL=debug
       - TZ=Europe/Warsaw
@@ -21,7 +21,6 @@ services:
       - 208.67.222.222
       - 1.1.1.1
       - 8.8.8.8
-
 
 networks:
   proxy:
