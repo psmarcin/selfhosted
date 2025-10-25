@@ -1,13 +1,24 @@
 services:
   podsync:
     image: ghcr.io/mxpv/podsync
-    network_mode: bridge
+    container_name: podsync
+    networks:
+      - podsync_isolated
     ports:
       - "9204:8080"
-#    user: 1000:1000
     environment:
       PODSYNC_CONFIG_PATH: /config/config.toml
     volumes:
-      - /opt/podsync/data:/app/data
-      - /opt/podsync/config:/config
+      - podsync_data:/app/data
+      - ${SYNO_DIR:-.}/podsync/config:/config
     restart: unless-stopped
+
+volumes:
+  podsync_data:
+    driver: local
+
+networks:
+  podsync_isolated:
+    driver: bridge
+    internal: true
+
