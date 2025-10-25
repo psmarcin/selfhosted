@@ -1,0 +1,57 @@
+TZ: Europe/Warsaw
+metrics:
+  main:
+    enabled: false
+ingress:
+  main:
+    enabled: true
+    hosts:
+      - host: subtitle.local.dev
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            PUID: 1000
+            PGID: 1000
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
+global:
+  traefik:
+    enableFixedMiddlewares: false
+    fixedMiddlewares: []
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    storageClass: "nas-storage"
+    mountPath: /config
+    targetSelectAll: true
+    subPath: "bazarr/config"
+    accessModes:
+      - ReadWriteMany
+  download-movies:
+    enabled: true
+    type: pvc
+    storageClass: "nas-storage"
+    mountPath: /movies
+    targetSelectAll: true
+    subPath: "downloads/movies"
+    accessModes:
+      - ReadWriteMany
+  download-tv:
+    enabled: true
+    type: pvc
+    storageClass: "nas-storage"
+    mountPath: /tv
+    targetSelectAll: true
+    subPath: "downloads/tv"
+    accessModes:
+      - ReadWriteMany

@@ -1,0 +1,71 @@
+# Source: https://raw.githubusercontent.com/traefik/traefik/v3.2/docs/content/user-guides/crd-acme/02-services.yml
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: whoami
+  labels:
+    app: whoami
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: whoami
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      containers:
+        - name: whoami
+          image: traefik/whoami
+          ports:
+            - name: web
+              containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+
+spec:
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+  selector:
+    app: whoami
+
+---
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: whoami-ingress
+#spec:
+#  rules:
+#    - host: test.local.dev
+#      http:
+#        paths:
+#          - path: /
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: whoami
+#                port:
+#                  name: web
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: le
+  routes:
+    - kind: Rule
+      match: Host(`test.local.dev`)
+      services:
+        - name: whoami
+          port: 80

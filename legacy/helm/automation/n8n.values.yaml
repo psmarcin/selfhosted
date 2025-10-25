@@ -1,0 +1,27 @@
+TZ: Europe/Warsaw
+ingress:
+  main:
+    enabled: true
+    hosts:
+      - host: n8n.local.dev
+resources:
+  limits:
+    cpu: 512m
+    memory: 512Mi
+  requests:
+    cpu: 10m
+    memory: 50Mi
+global:
+  traefik:
+    enableFixedMiddlewares: false
+    fixedMiddlewares: []
+persistence:
+  data:
+    enabled: true
+    mountPath: "/data"
+    type: pvc
+    storageClass: "nas-storage"
+    targetSelectAll: true
+    subPath: "n8n/data"
+    accessModes:
+      - ReadWriteMany

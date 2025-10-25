@@ -1,0 +1,38 @@
+TZ: Europe/Warsaw
+metrics:
+  main:
+    enabled: false
+ingress:
+  main:
+    enabled: true
+    hosts:
+      - host: v.local.dev
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            PUID: 1000
+            PGID: 1000
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 256m
+    memory: 256Mi
+global:
+  traefik:
+    enableFixedMiddlewares: false
+    fixedMiddlewares: []
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    storageClass: "nas-storage"
+    mountPath: /app/config
+    targetSelectAll: true
+    subPath: "jellyseerr/config"
+    accessModes:
+      - ReadWriteMany

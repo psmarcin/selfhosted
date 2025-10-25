@@ -1,3 +1,6 @@
 # local configs
 /docker/**/
 .idea
+/legacy/helm/cert-manager/cloudflare.yaml
+/legacy/helm/traefik/values.yaml
+/legacy/k8s/samba-secret.yaml

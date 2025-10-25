@@ -1,0 +1,126 @@
+#qbitportforward:
+#  enabled: true
+securityContext:
+#  container:
+#    runAsUser: 1000
+#    runAsGroup: 1000
+#    readOnlyRootFilesystem: false
+  pod:
+    fsGroup: 1000
+TZ: Europe/Warsaw
+ingress:
+  main:
+    enabled: true
+    hosts:
+      - host: torrent.local.dev
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            PUID: 1000
+            PGID: 1000
+podOptions:
+  nodeSelector:
+    local.dev/instance-type: cpu-intensive
+
+addons:
+  vpn:
+    type: gluetun
+    killSwitch: true
+    excludedNetworks_IPv4:
+      - "10.0.0.0/8"
+    excludedNetworks_IPv6: []
+    env:
+      VPN_SERVICE_PROVIDER: ""
+      OPENVPN_USER: ""
+      OPENVPN_PASSWORD: ""
+      SERVER_COUNTRIES: ""
+      DOT: true
+
+resources:
+  limits:
+    cpu: 2010m
+    memory: 2Gi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+global:
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+    requests:
+      cpu: 101m
+      memory: 129Mi
+  traefik:
+    # Enables or disables the fixed middlewares on all ingresses
+    # Can be overruled per ingress
+    enableFixedMiddlewares: false
+    # Applies middleware to all ingresses
+    # Can be overruled per ingress
+    fixedMiddlewares:
+      # - name: chain-basic
+        # Optional, by default will try to
+        # "lookup" the namespace based on the name
+        # namespace: ""
+    # The middlewares to apply if allowCors toggle is enabled
+    allowCorsMiddlewares:
+      - name: tc-opencors-chain
+        # Optional, by default will try to
+        # "lookup" the namespace based on the name
+        namespace: ""
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    storageClass: "nas-storage"
+    mountPath: /config
+    targetSelectAll: true
+    subPath: "qbittorrent"
+    accessModes:
+      - ReadWriteMany
+#  config:
+#    enabled: true
+#    type: pvc
+#    existingClaim: "pvc-smb"
+#    mountPath: /config
+#    targetSelectAll: true
+#    subPath: "qbittorrent"
+#    accessModes:
+#      - ReadWriteMany
+  download:
+    enabled: true
+    type: pvc
+    storageClass: "nas-storage"
+    mountPath: /downloads
+    targetSelectAll: true
+    subPath: "downloads"
+    accessModes:
+      - ReadWriteMany
+#  config:
+#    enabled: true
+#    type: "pvc"
+#    mountPath: "/config"
+#    targetSelectAll: true
+#    static:
+#      mode: smb
+#      server: ""
+#      share: "docker/qbittorrent"
+#      domain: "WORKGROUP"
+#      user: ""
+#      username: ""
+#      password: ""
+#  downloads:
+#    enabled: true
+#    type: "pvc"
+#    mountPath: "/downloads"
+#    targetSelectAll: true
+#    static:
+#      mode: smb
+#      server: "//
+#      share: "/docker/qbittorrent"
+#      domain: "WORKGROUP"
+#      user: "ps"
+#      password: ""
