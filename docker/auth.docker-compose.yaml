@@ -22,6 +22,9 @@ services:
     volumes:
       - ${SYNO_DIR:-.}/authelia/config:/config
 
+    networks:
+      - proxy
+
     dns:
       - 1.1.1.1
       - 1.0.0.1
@@ -45,15 +48,6 @@ services:
     security_opt:
       - no-new-privileges:true
 
-    read_only: false
-
-    cap_drop:
-      - ALL
-    cap_add:
-      - CHOWN
-      - SETGID
-      - SETUID
-
     logging:
       driver: json-file
       options:
@@ -67,3 +61,7 @@ secrets:
     file: ${SYNO_DIR:-.}/authelia/secrets/SESSION_SECRET
   STORAGE_ENCRYPTION_KEY:
     file: ${SYNO_DIR:-.}/authelia/secrets/STORAGE_ENCRYPTION_KEY
+
+networks:
+  proxy:
+    external: true
