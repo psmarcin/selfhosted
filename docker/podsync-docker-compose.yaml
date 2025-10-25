@@ -16,6 +16,7 @@ services:
       - podsync_data:/app/data
       - ${SYNO_DIR:-.}/podsync/config:/config
     restart: unless-stopped
+    entrypoint: "sleep 3600"
 
 volumes:
   podsync_data:
