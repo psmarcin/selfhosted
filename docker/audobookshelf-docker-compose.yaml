@@ -1,12 +1,47 @@
 services:
   audiobookshelf:
+    container_name: audiobookshelf
     image: ghcr.io/advplyr/audiobookshelf:latest
+    networks:
+      - audiobookshelf
+      - proxy
     ports:
       - "8082:80"
     volumes:
-      - /opt/audiobooks:/audiobooks
-      - /opt/podcasts:/podcasts
-      - /opt/audiobookshelf/config:/config
-      - /opt/audiobookshelf/metadata:/metadata
+      - ${SYNO_DIR:-.}/media/audiobooks:/audiobooks
+      - ${SYNO_DIR:-.}/media/podcasts:/podcasts
+      - audiobookshelf_config:/config
+      - audiobookshelf_metadata:/metadata
     environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
       - TZ=Europe/Warsaw
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/healthcheck" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2.0'
+        reservations:
+          memory: 128M
+          cpus: '0.1'
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  audiobookshelf_config:
+  audiobookshelf_metadata:
+
+networks:
+  audiobookshelf:
+    name: audiobookshelf
+    driver: bridge
+  proxy:
+    name: proxy
+    external: true
