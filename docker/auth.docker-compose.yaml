@@ -1,4 +1,68 @@
 ---
+services:
+  authelia:
+    container_name: authelia
+    image: docker.io/authelia/authelia:latest
+    restart: unless-stopped
+
+    ports:
+      - "9092:9091"
+
+    secrets:
+      - JWT_SECRET
+      - SESSION_SECRET
+      - STORAGE_ENCRYPTION_KEY
+
+    environment:
+      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: /run/secrets/JWT_SECRET
+      AUTHELIA_SESSION_SECRET_FILE: /run/secrets/SESSION_SECRET
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /run/secrets/STORAGE_ENCRYPTION_KEY
+      TZ: ${TZ:-UTC}
+
+    volumes:
+      - ${SYNO_DIR:-.}/authelia/config:/config
+
+    networks:
+      - proxy
+
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9091/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+    security_opt:
+      - no-new-privileges:true
+
+    read_only: false
+
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
 secrets:
   JWT_SECRET:
     file: ${SYNO_DIR:-.}/authelia/secrets/JWT_SECRET
@@ -6,20 +70,7 @@ secrets:
     file: ${SYNO_DIR:-.}/authelia/secrets/SESSION_SECRET
   STORAGE_ENCRYPTION_KEY:
     file: ${SYNO_DIR:-.}/authelia/secrets/STORAGE_ENCRYPTION_KEY
-services:
-  authelia:
-    container_name: 'authelia'
-    image: 'docker.io/authelia/authelia:latest'
-    restart: 'unless-stopped'
-    ports:
-      - "9092:9091"
-    secrets: ['JWT_SECRET', 'SESSION_SECRET', 'STORAGE_ENCRYPTION_KEY']
-    environment:
-      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: '/run/secrets/JWT_SECRET'
-      AUTHELIA_SESSION_SECRET_FILE: '/run/secrets/SESSION_SECRET'
-      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/STORAGE_ENCRYPTION_KEY'
-    volumes:
-      - ${SYNO_DIR:-.}/authelia/config:/config
-    dns:
-      - 1.1.1.1
-    network_mode: bridge
+
+networks:
+  proxy:
+    external: true
