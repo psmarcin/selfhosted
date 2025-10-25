@@ -9,7 +9,6 @@ services:
     environment:
       PODSYNC_CONFIG_PATH: /config/config.toml
     dns:
-      - 208.67.222.222
       - 1.1.1.1
       - 8.8.8.8
     volumes:
