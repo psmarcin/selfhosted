@@ -1,0 +1,40 @@
+services:
+  excalidraw:
+    container_name: excalidraw
+    image: excalidraw/excalidraw:latest
+    networks:
+      - excalidraw_isolated
+    ports:
+      - "9000:80"
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.excalidraw.loadbalancer.server.port=80
+      - traefik.http.routers.excalidraw.rule=Host(`${HOST}`)
+      - traefik.http.routers.excalidraw.tls.certresolver=${CERT_RESOLVER}
+      - traefik.http.routers.excalidraw.tls=true
+      - traefik.docker.network=proxy
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2.0'
+        reservations:
+          memory: 128M
+          cpus: '0.1'
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  excalidraw_isolated:
+    name: excalidraw
+    driver: bridge
+    internal: true
+#  proxy:
+#    external: true
