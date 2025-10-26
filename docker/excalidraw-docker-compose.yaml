@@ -37,5 +37,5 @@ networks:
     name: excalidraw
     driver: bridge
     internal: true
-#  proxy:
-#    external: true
+  proxy:
+    external: true
