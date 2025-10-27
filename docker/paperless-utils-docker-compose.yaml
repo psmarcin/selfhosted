@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  tika:
+    image: apache/tika:latest
+    container_name: tika
+    restart: unless-stopped
+    ports:
+      - "9093:9998"
+
+  gotenberg:
+    image: gotenberg/gotenberg:latest
+    container_name: gotenberg
+    restart: unless-stopped
+    ports:
+      - "9094:3000"
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
