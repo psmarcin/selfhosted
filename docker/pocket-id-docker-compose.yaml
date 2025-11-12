@@ -9,6 +9,8 @@ services:
       - PGID=1000
     networks:
       - proxy
+    ports:
+      - 1411:1411
     volumes:
       - "data:/app/data"
     # Optional healthcheck
