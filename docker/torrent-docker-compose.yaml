@@ -18,7 +18,7 @@ services:
       - PORT_FORWARD_ONLY=on
     dns: 9.9.9.9
     ports:
-      - "9094:8080"      # qBittorrent WebUI
+      - "9095:8080"      # qBittorrent WebUI
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
