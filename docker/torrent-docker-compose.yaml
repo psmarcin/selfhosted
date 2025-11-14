@@ -8,8 +8,8 @@ services:
     restart: unless-stopped
     environment:
       - VPN_SERVICE_PROVIDER=protonvpn
-      - OPENVPN_USER=${USER:-}
-      - OPENVPN_PASSWORD=${PASS:-}
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${PASS}
       - SERVER_COUNTRIES=Ukraine,Hong Kong
       - PORT_FORWARD_ONLY=on
     dns: 9.9.9.9
@@ -24,19 +24,9 @@ services:
       - PGID=1000
       - TZ=Europe/Warsaw
     volumes:
-      - torrent_qbittorrent:/config
-      - torrent_data:/downloads
+      - qbittorrent_config:/config
+      - ${DOCKER_DIR}/media:/downloads
     restart: unless-stopped
 
-
 volumes:
-  torrent_data:
-    driver_opts:
-      type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
-      device: //${SMB_URI:-.}/downloads
-  torrent_qbittorrent:
-    driver_opts:
-      type: cifs
-      o: username=${SMB_USER:-.},password=${SMB_PASS:-.},uid=1000,gid=1000,vers=3.0,rw
-      device: //${SMB_URI:-.}/qbittorrent
+  qbittorrent_config:
