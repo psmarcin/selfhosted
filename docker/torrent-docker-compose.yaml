@@ -14,7 +14,9 @@ services:
       - PORT_FORWARD_ONLY=on
     dns: 9.9.9.9
     ports:
-      - "9095:8080"
+      - ${PORT}:${PORT}
+      - 9096:${TORRENTING_PORT:-6887}
+      - 9096:${TORRENTING_PORT:-6887}/udp
   qbittorrent:
     image: linuxserver/qbittorrent:latest
     network_mode: service:vpn
@@ -22,6 +24,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Warsaw
+      - WEBUI_PORT=${PORT}
+      - TORRENTING_PORT=${TORRENTING_PORT:-6887}
     volumes:
       - qbittorrent_config:/config
       - ${DOCKER_DIR}/downloads:/downloads
