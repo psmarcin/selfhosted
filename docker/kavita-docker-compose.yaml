@@ -1,0 +1,23 @@
+services:
+  kavita:
+    image: hcr.io/kareadita/kavita:latest
+    container_name: kavita
+    volumes:
+      - ${DOCKER_DIR}/media/manga:/manga
+      - ${DOCKER_DIR}/media/comics:/comics
+      - ${DOCKER_DIR}/media/books:/books
+      - kavita_config:/kavita/config     # /kavita/config must not be changed
+    environment:
+      - TZ=Europe/Warsaw
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.kavita.loadbalancer.server.port=5000
+      - traefik.http.routers.kavita.rule=Host(`${HOST}`)
+      - traefik.http.routers.kavita.tls.certresolver=localresolver
+      - traefik.http.routers.kavita.tls=true
+
+volumes:
+  kavita_config:
