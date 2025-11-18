@@ -1,6 +1,6 @@
 services:
   kavita:
-    image: hcr.io/kareadita/kavita:latest
+    image: ghcr.io/kareadita/kavita:latest
     container_name: kavita
     volumes:
       - ${DOCKER_DIR}/media/manga:/manga
