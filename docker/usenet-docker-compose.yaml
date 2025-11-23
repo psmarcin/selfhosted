@@ -1,0 +1,37 @@
+services:
+  sabnzbd:
+    image: linuxserver/sabnzbd:latest
+    networks:
+      - usenet
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - sabnzbd_config:/config
+      - ${DOCKER_DIR:-.}/downloads:/downloads
+    ports:
+      - "9095:8080"
+    restart: unless-stopped
+
+  prowlarr:
+    image: linuxserver/prowlarr:latest
+    networks:
+      - usenet
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - prowlarr_config:/config
+    restart: unless-stopped
+    ports:
+      - "9096:9696"
+
+volumes:
+  sabnzbd_config:
+  prowlarr_config:
+
+networks:
+  usenet:
+    name: usenet
