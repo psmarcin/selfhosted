@@ -3,6 +3,7 @@ services:
     image: linuxserver/sabnzbd:latest
     networks:
       - usenet
+      - proxy
     environment:
       - PUID=1000
       - PGID=1000
@@ -13,11 +14,19 @@ services:
     ports:
       - "9095:8080"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.sabnzbd.loadbalancer.server.port=8080
+      - traefik.http.routers.sabnzbd.rule=Host(`download.${HOST_DOMAIN:-local.home}`)
+      - traefik.http.routers.sabnzbd.tls.certresolver=localresolver
+      - traefik.http.routers.sabnzbd.tls=true
+      - traefik.docker.network=proxy
 
   prowlarr:
     image: linuxserver/prowlarr:latest
     networks:
       - usenet
+      - proxy
     environment:
       - PUID=1000
       - PGID=1000
@@ -27,6 +36,13 @@ services:
     restart: unless-stopped
     ports:
       - "9096:9696"
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.prowlarr.loadbalancer.server.port=9696
+      - traefik.http.routers.prowlarr.rule=Host(`prowlarr.${HOST_DOMAIN:-local.home}`)
+      - traefik.http.routers.prowlarr.tls.certresolver=localresolver
+      - traefik.http.routers.prowlarr.tls=true
+      - traefik.docker.network=proxy
 
 volumes:
   sabnzbd_config:
@@ -35,3 +51,5 @@ volumes:
 networks:
   usenet:
     name: usenet
+  proxy:
+    external: true
