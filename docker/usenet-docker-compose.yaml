@@ -11,6 +11,7 @@ services:
     volumes:
       - sabnzbd_config:/config
       - ${DOCKER_DIR:-.}/downloads:/downloads
+      - ${TMP_DIR:-.}/:/incomplete-downloads
     ports:
       - "9095:8080"
     restart: unless-stopped
