@@ -14,7 +14,7 @@ services:
       - DATA_DIR=/data # DON'T CHANGE THIS
       - NEXTAUTH_SECRET=${SECRET}
       # PocketID
-      - OAUTH_WELLKNOWN_URL=https://links.${HOST_DOMAIN:-local.home}/.well-known/openid-configuration
+      - OAUTH_WELLKNOWN_URL=https://id.${HOST_DOMAIN:-local.home}/.well-known/openid-configuration
       - OAUTH_CLIENT_SECRET=${POCKET_SECRET}
       - OAUTH_CLIENT_ID=${POCKET_ID}
       - OAUTH_PROVIDER_NAME=Pocket-ID
