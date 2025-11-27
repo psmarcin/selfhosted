@@ -13,8 +13,6 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-pass}@postgres:5432/postgres
     restart: always
-    ports:
-      - 3000:3000
     networks:
       - links
       - proxy
@@ -25,13 +23,13 @@ services:
       - meilisearch
     labels:
       - traefik.enable=true
-      - traefik.http.services.linkwarden.loadbalancer.server.port=8080
+      - traefik.http.services.linkwarden.loadbalancer.server.port=3000
       - traefik.http.routers.linkwarden.rule=Host(`links.${HOST_DOMAIN:-local.home}`)
       - traefik.http.routers.linkwarden.tls.certresolver=localresolver
       - traefik.http.routers.linkwarden.tls=true
       - traefik.docker.network=proxy
   meilisearch:
-    image: getmeili/meilisearch:v1.12.8
+    image: getmeili/meilisearch:v1
     restart: always
     networks:
       - links
