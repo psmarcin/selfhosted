@@ -11,6 +11,8 @@ services:
   linkwarden:
     image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
     environment:
+      - NEXTAUTH_SECRET=${SECRET:-secret}
+      - NEXTAUTH_URL=http://localhost:3000/api/v1/auth
       - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-pass}@postgres:5432/postgres
     restart: always
     networks:
