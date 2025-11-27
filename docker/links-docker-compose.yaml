@@ -14,6 +14,13 @@ services:
       - DATA_DIR=/data # DON'T CHANGE THIS
       - NEXTAUTH_SECRET=${SECRET}
       - NEXTAUTH_URL=http://localhost:3000
+      # PocketID
+      - OAUTH_WELLKNOWN_URL=https://links.${HOST_DOMAIN:-local.home}/.well-known/openid-configuration
+      - OAUTH_CLIENT_SECRET=${POCKET_SECRET}
+      - OAUTH_CLIENT_ID=${POCKET_ID}
+      - OAUTH_PROVIDER_NAME=Pocket-ID
+      - DISABLE_PASSWORD_AUTH=true
+      - OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING=true
     labels:
       - traefik.enable=true
       - traefik.http.services.links.loadbalancer.server.port=3000
