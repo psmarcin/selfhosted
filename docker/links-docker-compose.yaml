@@ -1,51 +1,51 @@
 services:
-  postgres:
-    image: postgres:18-alpine
-    restart: always
-    environment:
-      - POSTGRES_PASSWORD=${DB_PASSWORD:-pass}
+  web:
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    restart: unless-stopped
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - links
-  linkwarden:
-    image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
-    environment:
-      - NEXTAUTH_SECRET=${SECRET:-secret}
-      - NEXTAUTH_URL=http://localhost:3000/api/v1/auth
-      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-pass}@postgres:5432/postgres
-      - OPENAI_MODEL=${MODEL:-gpt-4o}
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
-    restart: always
+      - data:/data
     networks:
       - links
       - proxy
-    volumes:
-      - linkwardendata:/data/data
-    depends_on:
-      - postgres
-      - meilisearch
+    environment:
+      - MEILI_ADDR=http://meilisearch:7700
+      - BROWSER_WEB_URL=http://chrome:9222
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATA_DIR=/data # DON'T CHANGE THIS
     labels:
       - traefik.enable=true
-      - traefik.http.services.linkwarden.loadbalancer.server.port=3000
-      - traefik.http.routers.linkwarden.rule=Host(`links.${HOST_DOMAIN:-local.home}`)
-      - traefik.http.routers.linkwarden.tls.certresolver=localresolver
-      - traefik.http.routers.linkwarden.tls=true
+      - traefik.http.services.links.loadbalancer.server.port=3000
+      - traefik.http.routers.links.rule=Host(`links.${HOST_DOMAIN:-local.home}`)
+      - traefik.http.routers.links.tls.certresolver=localresolver
+      - traefik.http.routers.links.tls=true
       - traefik.docker.network=proxy
-  meilisearch:
-    image: getmeili/meilisearch:v1
-    restart: always
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:124
+    restart: unless-stopped
     networks:
       - links
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  meilisearch:
+    image: getmeili/meilisearch:v1
+    restart: unless-stopped
+    networks:
+      - links
+    environment:
+      MEILI_NO_ANALYTICS: "true"
     volumes:
-      - meilidata:/meili_data
+      - meilisearch:/meili_data
 
 volumes:
-  pgdata:
-  linkwardendata:
-  meilidata:
+  meilisearch:
+  data:
 
 networks:
+  links:
   proxy:
     external: true
-  links:
