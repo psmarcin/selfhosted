@@ -12,6 +12,8 @@ services:
       - BROWSER_WEB_URL=http://chrome:9222
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DATA_DIR=/data # DON'T CHANGE THIS
+      - NEXTAUTH_SECRET=${SECRET}
+      - NEXTAUTH_URL=http://localhost:3000
     labels:
       - traefik.enable=true
       - traefik.http.services.links.loadbalancer.server.port=3000
