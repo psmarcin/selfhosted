@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-pass}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - links
+  linkwarden:
+    image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
+    environment:
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-pass}@postgres:5432/postgres
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - links
+      - proxy
+    volumes:
+      - linkwardendata:/data/data
+    depends_on:
+      - postgres
+      - meilisearch
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.linkwarden.loadbalancer.server.port=8080
+      - traefik.http.routers.linkwarden.rule=Host(`links.${HOST_DOMAIN:-local.home}`)
+      - traefik.http.routers.linkwarden.tls.certresolver=localresolver
+      - traefik.http.routers.linkwarden.tls=true
+      - traefik.docker.network=proxy
+  meilisearch:
+    image: getmeili/meilisearch:v1.12.8
+    restart: always
+    networks:
+      - links
+    volumes:
+      - meilidata:/meili_data
+
+volumes:
+  pgdata:
+  linkwardendata:
+  meilidata:
+
+networks:
+  proxy:
+    external: true
+  links:
