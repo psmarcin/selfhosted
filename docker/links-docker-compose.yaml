@@ -14,6 +14,8 @@ services:
       - NEXTAUTH_SECRET=${SECRET:-secret}
       - NEXTAUTH_URL=http://localhost:3000/api/v1/auth
       - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-pass}@postgres:5432/postgres
+      - OPENAI_MODEL=${MODEL:-gpt-4o}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
     restart: always
     networks:
       - links
