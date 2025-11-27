@@ -1,7 +1,7 @@
 services:
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v3.0.1 #
-    restart: always
+    image: ghcr.io/mealie-recipes/mealie:v3 #
+    restart: unless-stopped
     labels:
       - docker-volume-backup.stop-during-backup=true
       - traefik.enable=true
