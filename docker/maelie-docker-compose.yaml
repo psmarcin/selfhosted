@@ -1,6 +1,6 @@
 services:
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v3 #
+    image: ghcr.io/mealie-recipes/mealie:latest #
     restart: unless-stopped
     labels:
       - docker-volume-backup.stop-during-backup=true
