@@ -1,0 +1,20 @@
+services:
+  it-tools:
+    container_name: it-tools
+    image: sharevb/it-tools:latest
+    restart: unless-stopped
+    networks:
+      - tools
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.tools.loadbalancer.server.port=8080
+      - traefik.http.routers.tools.rule=Host(`tools.${HOST_DOMAIN:-local.home}`)
+      - traefik.http.routers.tools.tls.certresolver=localresolver
+      - traefik.http.routers.tools.tls=true
+      - traefik.docker.network=proxy
+
+networks:
+  tools:
+  proxy:
+    external: true
