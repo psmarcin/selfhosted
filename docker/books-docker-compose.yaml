@@ -25,8 +25,8 @@ services:
         condition: service_healthy
     volumes:
       - booklore_data:/app/data
-      - ${DOCKER_DIR:-./}media/books:/books
-      - ${DOCKER_DIR:-./}media/bookdrop:/bookdrop
+      - booklore_books:/books:rw
+      - booklore_bookdrop:/bookdrop:rw
     restart: unless-stopped
 
   mariadb:
@@ -52,6 +52,8 @@ services:
       retries: 10
 
 volumes:
+  booklore_books:
+  booklore_bookdrop:
   booklore_data:
   mariadb_data:
 
