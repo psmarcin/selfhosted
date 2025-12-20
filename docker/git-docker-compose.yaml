@@ -9,18 +9,12 @@ services:
       - gitea-config:/etc/gitea
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    ports:
-#      - "9097:3000"
-      - "2222:2222"
     labels:
       - traefik.enable=true
       - traefik.http.services.git.loadbalancer.server.port=3000
       - traefik.http.routers.git.rule=Host(`${HOST}`)
       - traefik.http.routers.git.tls.certresolver=localresolver
       - traefik.http.routers.git.tls=true
-      - traefik.tcp.routers.gitea-ssh.entrypoints=git
-      - traefik.tcp.routers.gitea-ssh.rule=HostSNI(`*`)
-      - traefik.tcp.services.gitea-ssh.loadbalancer.server.port=2222
       - traefik.docker.network=proxy
     environment:
       - GITEA__repository__ENABLE_PUSH_CREATE_ORG=true
