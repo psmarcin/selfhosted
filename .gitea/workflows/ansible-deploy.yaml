@@ -12,7 +12,7 @@ jobs:
 
       - name: Install Ansible
         run: |
-          apt install python3-ansible
+          apt update && apt install python3-ansible
 
       - name: Verify
         run: |
