@@ -15,6 +15,9 @@ help:
 	@echo ""
 	@echo "  You can pass extra arguments via ANSIBLE_ARGS=\"...\""
 
+ci:
+	ansible-playbook -i $(INVENTORY) $(PLAYBOOKS_DIR)ci.yaml
+
 all:
 	ansible-playbook -i $(INVENTORY) $(PLAYBOOKS_DIR)site.yaml
 
