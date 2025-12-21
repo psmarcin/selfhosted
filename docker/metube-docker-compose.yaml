@@ -21,6 +21,8 @@ services:
     environment:
       - UID=${USER:-1000}
       - GID=${GROUP:-1000}
+      - DOWNLOAD_MODE=sequential
+      - DOWNLOAD_DIR=/downloads
 networks:
   proxy:
     external: true
