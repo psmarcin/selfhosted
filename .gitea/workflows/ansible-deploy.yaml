@@ -30,4 +30,6 @@ jobs:
       - name: Deploy
         env:
           ANSIBLE_CONFIG: ${{ gitea.workspace }}/ansible/ansible.cfg
-        run: make ci
+        run: | 
+          cat ~/.ssh/id_ed25519 && \
+          make ci
