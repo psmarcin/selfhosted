@@ -17,6 +17,7 @@ services:
       - --api.disabledashboardad=true
       - --certificatesresolvers.localresolver.acme.dnsChallenge=true
       - --certificatesresolvers.localresolver.acme.dnsChallenge.provider=cloudflare
+      #      - --certificatesresolvers.localresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.localresolver.acme.email=${ACME_EMAIL:-.}
       - --certificatesresolvers.localresolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.localresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
