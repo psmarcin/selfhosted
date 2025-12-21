@@ -1,7 +1,7 @@
 name: Ansible Deploy
 on:
   push:
-#    branches: [ main ]
+    branches: [ dev ]
 jobs:
   demo:
     runs-on: ubuntu-latest
