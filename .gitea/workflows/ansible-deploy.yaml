@@ -13,7 +13,7 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v5
         with:
           playbook: ci.yaml
-          directory: ${{ HOME }}/ansible/playbooks/ci.yaml
+          directory: ${{ gitea.workspace }}/ansible/playbooks
           key: ${{secrets.DELL_DOCKER_1_SSH_KEY}}
           options: |
             --inventory ansible/inventory.yaml
