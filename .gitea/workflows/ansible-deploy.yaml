@@ -12,7 +12,7 @@ jobs:
 
       - name: Install Ansible
         run: |
-          pip install ansible
+          python3 -m pip install --user ansible-core
 
       - name: Verify
         run: |
