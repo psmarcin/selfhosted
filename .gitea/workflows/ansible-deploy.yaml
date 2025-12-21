@@ -1,7 +1,8 @@
 name: Ansible Deploy
 on:
+  workflow_dispatch:
   push:
-    branches: [ dev ]
+    branches: [ main ]
 jobs:
   demo:
     runs-on: ubuntu-latest
