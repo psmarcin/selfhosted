@@ -12,7 +12,7 @@ jobs:
 
       - name: Install Ansible
         run: |
-          apt update && apt install ansible
+          apt update && apt install -y ansible
 
       - name: Verify
         run: |
