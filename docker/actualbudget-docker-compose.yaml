@@ -1,0 +1,22 @@
+version: "2.4"
+services:
+  actualbudget:
+    image: actualbudget/actual-server:edge-alpine
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DIR:-./}actualbudget:/data
+    labels:
+      - docker-volume-backup.stop-during-backup=true
+      - traefik.enable=true
+      - traefik.http.services.actualbudget.loadbalancer.server.port=8000
+      - traefik.http.routers.actualbudget.rule=Host(`${HOST}`)
+      - traefik.http.routers.actualbudget.tls.certresolver=localresolver
+      - traefik.http.routers.actualbudget.tls=true
+    environment:
+      - WEBPASSWORD=${WEBPASS:-pass}
+      - DNS1=1.1.1.1
+      - DNS2=1.0.0.1
+      - DNSMASQ_LISTENING=all
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
