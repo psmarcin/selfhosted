@@ -5,14 +5,14 @@ on:
 jobs:
   ansible-deploy:
     runs-on: ubuntu-latest
-    container:
-      image: alpine/ansible:latest
     steps:
-      - name: Install dependencies
-        run: apk add git
 
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Install Ansible
+        run: |
+          pip install ansible
 
       - name: Verify
         run: |
