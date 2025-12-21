@@ -9,6 +9,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
 
+      - name: Install Ansible
+        run: "apt install -y ansible"
+
+      - name: Verify
+        run: |
+          ansible --version
+          ansible-playbook --version
+
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v5
         with:
