@@ -1,0 +1,6 @@
+---
+ansible_python_interpreter: /usr/bin/python3
+PUID: 1000
+PGID: 1000
+TZ: Europe/Warsaw
+SYNO_DIR: /volume1/docker

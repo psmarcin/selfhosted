@@ -1,0 +1,32 @@
+---
+- name: Create required Docker networks
+  community.docker.docker_network:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - utilites
+    - media
+    - proxy
+
+- name: Create required Docker volumes
+  community.docker.docker_volume:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - paperless_pl_media
+    - paperless_pl_data
+    - utils_pgdata
+
+- name: Synchronize docker configuration
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../../docker/"
+    dest: "{{ SYNO_DIR }}/"
+  when: SYNO_DIR is defined
+
+- name: Deploy Docker Compose files
+  community.docker.docker_compose_v2:
+    project_src: "{{ SYNO_DIR }}"
+    files:
+      - "{{ item | basename }}"
+  loop: "{{ query('fileglob', playbook_dir + '/../../docker/*.yaml') }}"
+  when: SYNO_DIR is defined
