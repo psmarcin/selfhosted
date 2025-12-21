@@ -3,6 +3,7 @@ services:
     image: docker.gitea.com/gitea:latest-rootless
     restart: always
     networks:
+      - gitea
       - proxy
     volumes:
       - gitea-data:/var/lib/gitea
@@ -25,13 +26,42 @@ services:
       - GITEA__server__SSH_PORT=2222
       - GITEA__service__DISABLE_REGISTRATION=true
       - GITEA__service__REQUIRE_SIGNIN_VIEW=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+  act_runner:
+    image: docker.io/gitea/act_runner:nightly
+    restart: unless-stopped
+    networks:
+      - gitea
+    volumes:
+      - runner-config:/config.yaml
+      - runner-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - CONFIG_FILE=/config.yaml
+      - GITEA_INSTANCE_URL=https://${HOST}/
+      - GITEA_RUNNER_REGISTRATION_TOKEN=${GITEA_RUNNER_REGISTRATION_TOKEN}
+      - GITEA_RUNNER_NAME=local-runner-1
+
 volumes:
   gitea-data:
     driver: local
   gitea-config:
     driver: local
+  runner-data:
+    driver: local
+  runner-config:
+    driver: local
 
 
 networks:
+  gitea:
   proxy:
     external: true
