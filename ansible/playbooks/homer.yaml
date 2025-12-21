@@ -1,15 +1,9 @@
 ---
+- import_playbook: homer-dir.yaml
 - name: Deploy Homelab Infrastructure
   hosts: all
   become: yes
   tasks:
-    - name: Ensure Homer assets directory exists
-      ansible.builtin.file:
-        path: /mnt/ppppppppds_docker/homer/assets
-        state: directory
-        mode: '0755'
-        recurse: yes
-
     - name: Copy Homer configuration
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../../docker/homer/config.yml"

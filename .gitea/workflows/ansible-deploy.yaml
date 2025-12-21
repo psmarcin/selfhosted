@@ -3,8 +3,18 @@ on:
   push:
     branches: [ main ]
 jobs:
-  deploy:
+  ansible-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
+
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v5
+        with:
+          playbook: ci.yaml
+          directory: ansible/playbooks/ci.yaml
+          key: ${{secrets.DELL_DOCKER_1_SSH_KEY}}
+          options: |
+            --inventory ansible/inventory.yaml
+            --verbose
