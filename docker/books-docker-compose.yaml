@@ -24,9 +24,9 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
+      - ${DOCKER_DIR:-.}/media/bookdrop:/bookdrop
       - booklore_data:/app/data
       - booklore_books:/books:rw
-      - booklore_bookdrop:/bookdrop:rw
     restart: unless-stopped
 
   mariadb:
@@ -53,7 +53,6 @@ services:
 
 volumes:
   booklore_books:
-  booklore_bookdrop:
   booklore_data:
   mariadb_data:
 
