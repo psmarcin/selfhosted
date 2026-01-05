@@ -10,6 +10,7 @@ services:
     volumes:
       - ${SYNO_DIR:-.}/media/audiobooks:/audiobooks
       - ${SYNO_DIR:-.}/media/podcasts:/podcasts
+      - ${SYNO_DIR:-.}/media/books:/books
       - audiobookshelf_config:/config
       - audiobookshelf_metadata:/metadata
     environment:
