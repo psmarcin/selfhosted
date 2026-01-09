@@ -7,7 +7,7 @@ services:
       - TRUST_PROXY=true
       - PUID=1000
       - PGID=1000
-      - ENCRYPTION_KEY=${{ENCRYPTION_KEY}}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
     networks:
       - proxy
     ports:
