@@ -1,12 +1,13 @@
 services:
   pocket-id:
-    image: ghcr.io/pocket-id/pocket-id:v1
+    image: ghcr.io/pocket-id/pocket-id:v2
     restart: unless-stopped
     environment:
       - APP_URL=https://${HOST}
       - TRUST_PROXY=true
       - PUID=1000
       - PGID=1000
+      - ENCRYPTION_KEY=${{ENCRYPTION_KEY}}
     networks:
       - proxy
     ports:
